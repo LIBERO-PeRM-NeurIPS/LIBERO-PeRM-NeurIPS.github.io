@@ -48,6 +48,8 @@ section[id], footer[id] { scroll-margin-top: 4rem; }
 }
 .publication-authors { margin-top: 1.25rem; }
 .publication-authors .author-block { font-weight: 600; }
+.publication-authors .author-block a { color: var(--accent); }
+.publication-affiliation { color: var(--ink); margin-top: 0.15rem; }
 .publication-venue {
   color: var(--ink-soft);
   font-style: italic;
