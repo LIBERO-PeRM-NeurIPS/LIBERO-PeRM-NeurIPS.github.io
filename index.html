@@ -92,18 +92,13 @@
 <!-- ======================= Teaser ======================= -->
 <section class="section pt-0">
   <div class="container is-max-desktop">
-    <!-- TODO: replace placeholder with
-         <video autoplay muted loop playsinline><source src="static/videos/teaser.mp4" type="video/mp4"></video> -->
-    <div class="media-placeholder ratio-21x9">
-      <div class="placeholder-inner">
-        <i class="fas fa-film"></i>
-        <p>Teaser video &mdash; the same mission executed under different user preferences</p>
-      </div>
-    </div>
+    <video class="teaser-video" autoplay muted loop playsinline>
+      <source src="static/videos/teaser.mp4" type="video/mp4">
+    </video>
     <p class="teaser-caption has-text-centered">
-      Two users ask for the <em>same</em> pick-and-place task. One wants it done gently and close to the table;
-      the other wants the robot to keep clear of the wine bottle and grasp from the side.
-      <b>LIBERO-PeRM</b> measures whether a policy can honor both.
+      The <em>same</em> pick, six ways. One user wants the mug grabbed by its handle; others want it
+      picked from the left side, from the back edge, carried higher, or moved slowly.
+      <b>LIBERO-PeRM</b> measures whether a policy can honor each request.
     </p>
   </div>
 </section>
@@ -490,35 +485,59 @@
   <div class="container is-max-widescreen">
     <h2 class="title is-3 section-title has-text-centered">Preference Demonstrations</h2>
     <p class="section-lead has-text-centered">
-      One rollout per preference type. Left: preference-agnostic execution. Right: the same mission under the preference.
+      Paired rollouts across the three preference tiers. In each clip: <b>preferred</b> execution (left),
+      its preference-agnostic <b>naive</b> twin (middle), and the per-preference <b>raw measurement</b>
+      used for dual-anchor metric calibration (right).
     </p>
-    <div class="columns is-multiline mt-4">
-      <!-- TODO: each placeholder becomes
-           <video controls muted loop playsinline><source src="static/videos/demo_<type>.mp4" type="video/mp4"></video> -->
-      <div class="column is-3-desktop is-6-tablet">
-        <div class="media-placeholder ratio-1x1"><div class="placeholder-inner"><i class="fas fa-video"></i><p>&ldquo;Move slower&rdquo;</p><span class="demo-tag">speed</span></div></div>
-      </div>
-      <div class="column is-3-desktop is-6-tablet">
-        <div class="media-placeholder ratio-1x1"><div class="placeholder-inner"><i class="fas fa-video"></i><p>&ldquo;Accelerate gently&rdquo;</p><span class="demo-tag">acceleration</span></div></div>
-      </div>
-      <div class="column is-3-desktop is-6-tablet">
-        <div class="media-placeholder ratio-1x1"><div class="placeholder-inner"><i class="fas fa-video"></i><p>&ldquo;Carry it higher&rdquo;</p><span class="demo-tag">height offset</span></div></div>
-      </div>
-      <div class="column is-3-desktop is-6-tablet">
-        <div class="media-placeholder ratio-1x1"><div class="placeholder-inner"><i class="fas fa-video"></i><p>&ldquo;Take the direct path&rdquo;</p><span class="demo-tag">straight path</span></div></div>
-      </div>
-      <div class="column is-3-desktop is-6-tablet">
-        <div class="media-placeholder ratio-1x1"><div class="placeholder-inner"><i class="fas fa-video"></i><p>&ldquo;Keep away from the bottle&rdquo;</p><span class="demo-tag">avoidance</span></div></div>
-      </div>
-      <div class="column is-3-desktop is-6-tablet">
-        <div class="media-placeholder ratio-1x1"><div class="placeholder-inner"><i class="fas fa-video"></i><p>&ldquo;Don't tilt it&rdquo;</p><span class="demo-tag">rotation</span></div></div>
-      </div>
-      <div class="column is-3-desktop is-6-tablet">
-        <div class="media-placeholder ratio-1x1"><div class="placeholder-inner"><i class="fas fa-video"></i><p>&ldquo;Pick it from the side&rdquo;</p><span class="demo-tag">skill &middot; grasp</span></div></div>
-      </div>
-      <div class="column is-3-desktop is-6-tablet">
-        <div class="media-placeholder ratio-1x1"><div class="placeholder-inner"><i class="fas fa-video"></i><p>&ldquo;Prefer the blue objects&rdquo;</p><span class="demo-tag">user profile</span></div></div>
-      </div>
+
+    <h3 class="title is-4 tier-group-title"><span class="tier-dot low"></span>Motion-Level</h3>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/1-2_113_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">speed</span> &ldquo;Slow down&rdquo; &mdash; pick up the butter and put it in the basket</p>
+    </div>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/1-5_114_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">height offset</span> &ldquo;Close to ground when moving&rdquo; &mdash; pick the chocolate pudding and place it in the basket</p>
+    </div>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/1-7_104_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">height offset</span> &ldquo;Move higher&rdquo; &mdash; put the bowl on the plate</p>
+    </div>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/1-8_114_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">rotation</span> &ldquo;Rotate when moving&rdquo; &mdash; pick up the chocolate pudding and put it in the basket</p>
+    </div>
+
+    <h3 class="title is-4 tier-group-title"><span class="tier-dot skill"></span>Skill-Level</h3>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/2-1_019_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">grasp point</span> &ldquo;Pick from right edge&rdquo; &mdash; put the black bowl on the plate</p>
+    </div>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/2-3_077_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">grasp point</span> &ldquo;Pick by handle&rdquo; &mdash; put the white mug on the left plate</p>
+    </div>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/2-5_116_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">grasp style</span> &ldquo;Pick from left side&rdquo; &mdash; put the ketchup in the basket</p>
+    </div>
+
+    <h3 class="title is-4 tier-group-title"><span class="tier-dot profile"></span>User-Profile-Level</h3>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/3-2_001_1_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">object choice</span> &ldquo;Prefer red objects&rdquo; &mdash; put the bowl in the bottom drawer and close it</p>
+    </div>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/3-3_117_2_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">object choice</span> &ldquo;Prefer yellow objects&rdquo; &mdash; pick the milk and place it in the basket</p>
+    </div>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/3-4_104_1_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">object choice</span> &ldquo;Prefer blue objects&rdquo; &mdash; put the bowl on the plate</p>
+    </div>
+    <div class="compare-block">
+      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/3-5_064_1_compare.mp4" type="video/mp4"></video>
+      <p class="compare-caption"><span class="demo-tag">object choice</span> &ldquo;Prefer bigger objects&rdquo; &mdash; pick up a tomato sauce and put it in the basket</p>
     </div>
   </div>
 </section>

@@ -116,6 +116,47 @@ section[id], footer[id] { scroll-margin-top: 4rem; }
   margin-right: auto;
 }
 
+/* ---------- videos ---------- */
+.teaser-video {
+  display: block;
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+.tier-group-title {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+.tier-dot {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  margin-right: 0.6rem;
+}
+.tier-dot.low     { background: #3273dc; }
+.tier-dot.skill   { background: #7a5af8; }
+.tier-dot.profile { background: #0ea5a4; }
+.compare-block {
+  margin-bottom: 1.75rem;
+}
+.compare-block video {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  background: #000;
+}
+.compare-caption {
+  margin-top: 0.5rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.compare-caption .demo-tag {
+  margin-top: 0;
+  margin-right: 0.5rem;
+}
+
 /* ---------- stats strip ---------- */
 .stats-strip {
   background: var(--accent-dark);
