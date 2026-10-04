@@ -5,7 +5,7 @@
   "use strict";
 
   /* Fill these in when the links go live; an empty entry renders as "soon". */
-  var LINKS = { paper: "", code: "", dataset: "" };
+  var LINKS = { paper: "", code: "https://github.com/LIBERO-PeRM-NeurIPS/LIBERO-PeRM", dataset: "" };
 
   var TASKS = window.PERM_TASKS || [];
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
