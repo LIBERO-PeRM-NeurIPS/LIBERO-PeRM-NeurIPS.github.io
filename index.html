@@ -1,582 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LIBERO-PeRM: A preference-aware benchmark for personalized robotic manipulation, built on LIBERO with a three-tier preference system.">
-  <title>LIBERO-PeRM: Personalized Robotic Manipulation Benchmark</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LIBERO-PeRM — Benchmarking Personalized Robotic Manipulation</title>
+  <meta name="description" content="LIBERO-PeRM: a benchmark for personalized robotic manipulation. Three preference levels, five task suites, 312 tasks, paired demonstrations with and without preferences, and preference-satisfaction metrics.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Castoro&family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- webfont loads async so an unreachable fonts host never blocks first paint -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="css/style.css?v=1">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='4' fill='%230071e3'/><circle cx='8' cy='8' r='3.2' fill='white'/></svg>">
 </head>
 <body>
 
-<!-- ======================= Navbar ======================= -->
-<nav class="navbar is-fixed-top perm-navbar" role="navigation" aria-label="main navigation">
-  <div class="container">
-    <div class="navbar-brand">
-      <a class="navbar-item brand-text" href="#top">LIBERO-PeRM</a>
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="permNavMenu">
-        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
-      </a>
+<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+
+<header class="site-header" id="top">
+  <div class="header-inner">
+    <a class="brand" href="#top"><span class="brand-dot"></span><span>LIBERO-<b>PeRM</b></span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#overview">Abstract</a>
+      <a href="#preferences">Preferences</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#suites">Suites</a>
+      <a href="#tasks">Tasks</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#results">Results</a>
+      <a href="#citation">Citation</a>
+    </nav>
+    <a class="hbtn" data-link="code" title="Code on GitHub">
+      <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      Code
+    </a>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="reel" id="reel" aria-hidden="true">
+    <div class="reel-row" data-dir="left" style="--dur:92s" data-clips="1-1_004,2-1_019,3-2_001_1,1-7_104,2-8_ood3,3-8_081_2,1-4_034,2-12_085"></div>
+    <div class="reel-row" data-dir="right" style="--dur:108s" data-clips="2-5_116,3-4_104_1,1-5_114,2-7_ood1,3-9_118_1,1-8_061,2-14_068,2-3_077"></div>
+  </div>
+  <div class="scrim" aria-hidden="true"></div>
+
+  <div class="wrap hero-copy">
+    <div class="badges">
+      <span class="badge">NeurIPS 2026 · Evaluations &amp; Datasets Track</span>
+      <span class="badge">Benchmark &amp; Dataset</span>
+      <span class="badge">312 tasks</span>
     </div>
-    <div id="permNavMenu" class="navbar-menu">
-      <div class="navbar-end">
-        <a class="navbar-item" href="#abstract">Abstract</a>
-        <a class="navbar-item" href="#preferences">Preferences</a>
-        <a class="navbar-item" href="#benchmark">Benchmark</a>
-        <a class="navbar-item" href="#rqs">Research Questions</a>
-        <a class="navbar-item" href="#metrics">Metrics</a>
-        <a class="navbar-item" href="#results">Results</a>
-        <a class="navbar-item" href="#demos">Demos</a>
-        <a class="navbar-item" href="#bibtex">BibTeX</a>
-      </div>
+
+    <h1>LIBERO-<span class="hl">PeRM</span></h1>
+    <p class="hero-tag">Benchmarking <b>Personalized Robotic Manipulation</b> — can a policy do the task <b>the way you want it done</b>?</p>
+
+    <div class="authors">
+      <p class="names"><a href="https://zhixuli-the-runner.github.io/" target="_blank" rel="noopener">Zhixu Li</a><!-- TODO: co-authors --></p>
+      <p class="affil">University of California, Riverside</p>
+    </div>
+
+    <div class="cta">
+      <a class="btn primary" data-link="paper">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5.5L9.5 0H4zm5 1.5L13.5 6H9V1.5zM4.5 8h7v1.2h-7V8zm0 2.8h7V12h-7v-1.2z"/></svg>
+        Paper</a>
+      <a class="btn" data-link="code">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        Code</a>
+      <a class="btn" data-link="dataset">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 1C4.1 1 1 2.3 1 4v8c0 1.7 3.1 3 7 3s7-1.3 7-3V4c0-1.7-3.1-3-7-3zm0 1.5c3.3 0 5.5 1 5.5 1.5S11.3 5.5 8 5.5 2.5 4.5 2.5 4 4.7 2.5 8 2.5zM2.5 5.9C3.9 6.6 5.8 7 8 7s4.1-.4 5.5-1.1V8c0 .5-2.2 1.5-5.5 1.5S2.5 8.5 2.5 8V5.9zm0 4C3.9 10.6 5.8 11 8 11s4.1-.4 5.5-1.1V12c0 .5-2.2 1.5-5.5 1.5S2.5 12.5 2.5 12V9.9z"/></svg>
+        Dataset</a>
+      <a class="btn ghost" href="#citation">Cite</a>
+    </div>
+
+    <div class="metrics-row">
+      <div class="hm"><b>312</b><span>tasks across<br>5 task suites</span></div>
+      <div class="hm"><b>3</b><span>preference levels<br>motion · skill · profile</span></div>
+      <div class="hm"><b>55</b><span>preference instances<br>37 single + 18 multi</span></div>
+      <div class="hm"><b>40.8K</b><span>demonstrations<br>with and without preference</span></div>
+      <div class="hm"><b>2</b><span>metrics: task success<br>+ preference satisfaction</span></div>
+      <div class="hm"><b>6</b><span>VLA policies<br>evaluated</span></div>
     </div>
   </div>
-</nav>
+  <div class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6l5 5 5-5"/></svg></div>
+</section>
 
-<!-- ======================= Hero ======================= -->
-<section class="hero" id="top">
-  <div class="hero-body">
-    <div class="container is-max-desktop has-text-centered">
-      <h1 class="title is-1 publication-title">
-        <span class="perm-logo">LIBERO-PeRM</span>:<br>
-        Benchmarking <span class="accent">Pe</span>rsonalized <span class="accent">R</span>obotic <span class="accent">M</span>anipulation
-      </h1>
-      <h2 class="subtitle is-4 publication-subtitle">
-        Can vision-language-action models do a task <em>the way you want it done</em>?
-      </h2>
+<!-- ================= 01 ABSTRACT ================= -->
+<section class="band" id="overview">
+  <div class="wrap">
+    <div class="eyebrow"><span class="no">01</span><span class="label">Abstract</span><span class="rule"></span></div>
+    <h2>From <i>“Can the robot do the task?”</i> to <i>“Can it do the task my way?”</i></h2>
 
-      <div class="is-size-5 publication-authors">
-        <span class="author-block"><a href="https://zhixuli-the-runner.github.io/" target="_blank" rel="noopener">Zhixu Li</a></span>
-        <!-- TODO: append co-authors as <span class="author-block"> entries -->
-      </div>
-      <div class="is-size-6 publication-affiliation">
-        <span>University of California, Riverside</span>
-      </div>
-      <div class="is-size-6 publication-venue">
-        <span>Preprint &mdash; paper coming soon</span>
+    <div class="card abstract reveal">
+      <p>Personalization is essential for general-purpose robots to transition into household environments and achieve true practicality. While general robotic manipulation has been extensively studied, personalized robotic manipulation (PeRM) lacks a unified formulation and remains significantly underexplored. In this paper, we identify user preference as the cornerstone of PeRM and introduce <b>LIBERO-PeRM</b>, a novel benchmark designed for personalized preference learning in embodied agents. Specifically, LIBERO-PeRM highlights five key research topics in personalization: 1) how policies follow preferences in zero-shot settings; 2) how to learn single preferences from demonstrations; 3) how efficiently policies acquire preferences as demonstrations increase; 4) how learned preferences generalize across layouts and preference settings; and 5) how policies compose multiple preferences and resolve conflicts. To this end, we propose a unified formulation of personalized manipulation with three preference levels that jointly cover common daily personalization scenarios. Building on this formulation and the LIBERO framework, we develop an extensible procedural generation pipeline that generates paired demonstrations with and without preferences. For benchmarking purposes, we create five task suites (312 tasks in total) with corresponding high-quality demonstrations, rich metadata, and preference satisfaction metrics to probe the aforementioned research topics. Experimental results show that current VLA policies struggle with zero-shot personalization, while SFT makes preferences learnable; preference learning benefits from mixed training, broader layout diversity, and same-layout no-preference data, but generalization, decomposition, and conflict resolution remain difficult.</p>
+    </div>
+
+    <figure class="card fig reveal">
+      <img src="assets/figures/overview.png" alt="LIBERO-PeRM overview: five task suites on top, five research topics below" loading="eager">
+      <figcaption><b>Five task suites, five research topics.</b> Top: the procedurally generated suites, with pipeline-generated and human-reviewed demonstrations. Bottom: the questions they are built to answer, from zero-shot personalization to composition and conflict.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= 02 PREFERENCES ================= -->
+<section class="band alt" id="preferences">
+  <div class="wrap wide">
+    <div class="eyebrow"><span class="no">02</span><span class="label">Preference formulation</span><span class="rule"></span></div>
+    <h2>Three preference levels, 37 single preferences</h2>
+    <p class="lede">A preference is not a separate goal. It is a conditioning signal that biases <b>how</b> the task is carried out, and it is defined by the part of execution it constrains: the <b>motion</b>, the <b>skill</b>, or the <b>subtask-level choice</b>. Pick a level and a preference below. Each one comes with two layouts, shown with and without the preference and scored by its own metric.</p>
+
+    <div id="prefWidget">
+      <div class="tabs" role="tablist" aria-label="Preference levels">
+        <button class="tab on" role="tab" data-tier="motion" style="--c:var(--motion)"><span class="t-id">Motion</span><span class="t-name">How the trajectory moves</span><span class="t-sub" data-count="motion"></span></button>
+        <button class="tab" role="tab" data-tier="skill" style="--c:var(--skill)"><span class="t-id">Skill</span><span class="t-name">How a skill is executed</span><span class="t-sub" data-count="skill"></span></button>
+        <button class="tab" role="tab" data-tier="profile" style="--c:var(--profile)"><span class="t-id">User profile</span><span class="t-name">Which object or target is chosen</span><span class="t-sub" data-count="profile"></span></button>
       </div>
 
-      <div class="publication-links">
-        <!-- TODO: swap href="#" for real links once public -->
-        <span class="link-block">
-          <a class="external-link button is-dark is-rounded is-disabled-link" title="Coming soon">
-            <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
-          </a>
-        </span>
-        <span class="link-block">
-          <a class="external-link button is-dark is-rounded is-disabled-link" title="Coming soon">
-            <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
-          </a>
-        </span>
-        <span class="link-block">
-          <a class="external-link button is-dark is-rounded is-disabled-link" title="Coming soon">
-            <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
-          </a>
-        </span>
-        <span class="link-block">
-          <a class="external-link button is-dark is-rounded is-disabled-link" title="Coming soon">
-            <span class="icon"><i class="fas fa-database"></i></span><span>Dataset</span>
-          </a>
-        </span>
+      <div class="card on-alt stage" id="prefStage" style="--c:var(--motion)">
+        <div class="media" data-video id="prefMedia">
+          <video id="prefVideo" muted loop playsinline preload="metadata"></video>
+          <span class="hint">Hover or click to play</span>
+          <span class="play">▶</span>
+        </div>
+        <div class="stage-info">
+          <span class="pill" id="prefPill"></span>
+          <h3 id="prefTitle"></h3>
+          <p class="task" id="prefTask"></p>
+          <p class="how" id="prefHow"></p>
+          <div class="scores" id="prefScores"></div>
+          <div class="demo-switch" id="prefSwitch" role="group" aria-label="Layout"></div>
+          <div class="chips-title" id="prefChipsTitle"></div>
+          <div class="chips" id="prefChips"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <h3>What the policy sees</h3>
+      <p>Task and preference language are concatenated into one prompt, and the policy acts from two camera views. Every suite keeps this interface, so a model trained on one can be evaluated on the others.</p>
+      <div class="formula">prompt = “Task: {task_language}. Preference: {preference_language}.”</div>
+      <div class="formula">π<sub>θ</sub>( a<sub>t</sub> | I<sub>t</sub><sup>agent</sup>, I<sub>t</sub><sup>hand</sup>, ℓ<sub>task</sub> ∥ ℓ<sub>pref</sub> )</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 PIPELINE ================= -->
+<section class="band" id="pipeline">
+  <div class="wrap wide">
+    <div class="eyebrow"><span class="no">03</span><span class="label">Benchmark construction</span><span class="rule"></span></div>
+    <h2>A procedural pipeline that treats preferences as controllable variables</h2>
+    <p class="lede">Starting from a LIBERO layout, a task and a preference, the pipeline produces a preference-ready scene, <b>paired demonstrations with and without the preference</b>, subtask metadata, and the metric that scores the preference.</p>
+
+    <div class="grid3">
+      <div class="cell reveal">
+        <div class="over">Stage 1</div>
+        <h3>Preference selection and layout modification</h3>
+        <p>A VLM makes the smallest edit that lets the preference be acted on. Motion and skill preferences leave the layout and task language untouched, and the VLM only picks the target, such as the object to avoid. A user profile adds what it needs, for example a red twin of an object, and the task language is abstracted so one sentence covers both behaviours.</p>
+        <div class="chips"><span class="chip">LIBERO layouts</span><span class="chip">VLM grounding</span></div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="cell reveal">
+        <div class="over">Stage 2</div>
+        <h3>Preference-conditioned generation</h3>
+        <p>A VLM writes a no-preference plan and a preference-conditioned plan. A library of heuristic skills, each built from one human demonstration plus an OMPL planner over randomized initial states, turns the plans into trajectories. A user profile changes the plan, a skill preference changes which skill is called, and a motion preference changes the skill's parameters.</p>
+        <div class="chips"><span class="chip">paired demonstrations</span><span class="chip">OMPL + smoothing</span><span class="chip">72%+ skills need no offset tuning</span></div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="cell reveal">
+        <div class="over">Stage 3</div>
+        <h3>Satisfaction metric generation</h3>
+        <p>Each preference gets an explicit metric. Motion preferences are scored from trajectory quantities, skill preferences at key waypoints, and user profiles from the executed subtask plan. Scores map to a four-level label so that all three levels report on the same scale.</p>
+        <div class="chips"><span class="chip">satisfaction score</span><span class="chip">d ∈ {0, ¼, ¾, 1}</span></div>
+      </div>
+    </div>
+
+    <figure class="card fig reveal">
+      <img src="assets/figures/pipeline.png" alt="Data generation pipeline: preference selection and layout modification, preference-conditioned generation, satisfaction metric generation" loading="lazy">
+      <figcaption><b>Data generation pipeline.</b> Inputs on the left, the three stages in the middle, and what each stage adds to the released data along the bottom.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= 04 SUITES ================= -->
+<section class="band alt" id="suites">
+  <div class="wrap wide">
+    <div class="eyebrow"><span class="no">04</span><span class="label">Task suites</span><span class="rule"></span></div>
+    <h2>Five suites, each isolating one capability</h2>
+    <p class="lede">Together the suites hold <b>312 tasks</b> with more than 100 trajectories per task on average and <b>40.8K</b> rollout episodes. A task is one layout, one task instruction and one preference prompt.</p>
+
+    <div class="grid5">
+      <div class="cell suite reveal"><div class="count">100<small>tasks</small></div><h3>LIBERO-SinglePref</h3><p>Single-preference learning and execution. The foundation for every other suite.</p></div>
+      <div class="cell suite reveal"><div class="count">100<small>tasks</small></div><h3>LIBERO-PrefScale</h3><p>How preference learning scales with demonstrations, tasks and layouts, with no-preference data, unseen layouts and different tasks for generalization.</p></div>
+      <div class="cell suite reveal"><div class="count">48<small>tasks</small></div><h3>LIBERO-PrefConflict</h3><p>Two preferences that cannot both hold on the same layout and task, and preferences that argue against the task itself.</p></div>
+      <div class="cell suite reveal"><div class="count">64<small>tasks</small></div><h3>LIBERO-PrefCompose</h3><p>Four aligned conditions per layout and task: no preference, P<sub>A</sub>, P<sub>B</sub>, and P<sub>A</sub> + P<sub>B</sub>.</p></div>
+      <div class="cell suite reveal"><div class="count">reuse</div><h3>LIBERO-ComprePref</h3><p>Rewritten prompts over tasks from the other suites: explicit task–preference mixtures and implicit cues that imply the preference without naming it.</p></div>
+    </div>
+
+    <figure class="card on-alt fig reveal">
+      <img src="assets/figures/statistics.png" alt="Dataset statistics: tasks by suite, tasks by preference type, preference instances by type, trajectory length, number of skills" loading="lazy">
+      <figcaption><b>Dataset statistics.</b> (a) Tasks by suite. (b) Tasks by preference type, including the no-preference tasks generated for comparison. (c) Preference instances by type. (d) Trajectory length. (e) Number of skills per task.</figcaption>
+    </figure>
+
+    <div class="res-grid reveal">
+      <a class="card on-alt res" data-link="dataset"><span class="r-name">Demonstrations</span><span class="r-desc">Per-task HDF5 files with third-person and wrist views, full simulator states, subtask metadata and per-step preference signals.</span><span class="r-host">Hugging Face</span></a>
+      <a class="card on-alt res" data-link="dataset"><span class="r-name">Task definitions</span><span class="r-desc">BDDL scenes and mission files: instructions, no-preference and preference plans, metric parameters and calibration.</span><span class="r-host">Hugging Face · GitHub</span></a>
+      <a class="card on-alt res" data-link="code"><span class="r-name">Generation and evaluation code</span><span class="r-desc">The procedural pipeline, the preference metrics, policy servers and the rollout client.</span><span class="r-host">GitHub</span></a>
+      <a class="card on-alt res" data-link="code"><span class="r-name">Reproduction scripts</span><span class="r-desc">One script per table and figure of the paper, from fine-tuning to evaluation.</span><span class="r-host">GitHub</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 TASKS ================= -->
+<section class="band" id="tasks">
+  <div class="wrap wide">
+    <div class="eyebrow"><span class="no">05</span><span class="label">Task explorer</span><span class="rule"></span></div>
+    <h2>Every task, with its preference-satisfaction curve</h2>
+    <p class="lede">Each clip replays the demonstrations for one task and re-evaluates the task's preference metric on the trace so far, so <b>the end of a curve is the episode score</b>. With two rollouts, solid lines follow the top one and dashed lines the bottom one. Conflict and composition tasks plot both preferences.</p>
+
+    <div class="filters" id="taskFilters" role="group" aria-label="Filter tasks by suite"></div>
+    <p class="filter-note" id="taskNote"></p>
+    <div class="task-grid" id="taskGrid"></div>
+    <div class="more"><button class="btn" id="taskMore" type="button">Show more</button></div>
+  </div>
+</section>
+
+<!-- ================= 06 METRICS ================= -->
+<section class="band alt" id="metrics">
+  <div class="wrap wide">
+    <div class="eyebrow"><span class="no">06</span><span class="label">Evaluation protocol</span><span class="rule"></span></div>
+    <h2>Task success and preference satisfaction, reported separately</h2>
+    <p class="lede">A policy can finish the task while ignoring the preference. Two metrics keep those apart, and preference satisfaction only counts on episodes where the task succeeds.</p>
+
+    <div class="grid3">
+      <div class="cell metric reveal">
+        <div class="name"><span class="abbr">SR</span><span class="full">Task success rate</span></div>
+        <div class="formula">SR = (1/N) Σ<sub>n</sub> 𝟙[ G(τ<sub>n</sub>) ]</div>
+        <p>Whether the task goal is reached, with or without a preference in the prompt.</p>
+      </div>
+      <div class="cell metric reveal">
+        <div class="name"><span class="abbr">SA</span><span class="full">Preference satisfaction</span></div>
+        <div class="formula">SA = (1/N) Σ<sub>n</sub> 𝟙[ G(τ<sub>n</sub>) ] · d<sub>n</sub></div>
+        <p>Each episode gets a discrete satisfaction label d<sub>n</sub> ∈ {0, ¼, ¾, 1}. A failed episode contributes zero.</p>
+      </div>
+      <div class="cell metric reveal">
+        <div class="name"><span class="abbr">Gen.</span><span class="full">Three generalization settings</span></div>
+        <div class="formula">in-domain → task / layout → preference-level</div>
+        <p>In-domain keeps tasks, preferences and layouts with small object-position changes. Task-or-layout changes one of them. Preference-level changes the task under an unseen layout.</p>
+      </div>
+    </div>
+
+    <div class="grid3" style="margin-top:16px">
+      <div class="cell level reveal" style="--c:var(--motion)"><div class="over">Motion</div><h3>Scored from the trajectory</h3><p>Physical quantities of the path: time per subtask, end-effector acceleration, height during lateral moves, straightness of the carry segment, clearance from a named object, rotation while moving.</p></div>
+      <div class="cell level reveal" style="--c:var(--skill)"><div class="over">Skill</div><h3>Scored at the skill's key moment</h3><p>The pose at the grasp or at the release: where the gripper sits relative to the object, its approach angle, how the object is set down or let go, whether it was lifted at all.</p></div>
+      <div class="cell level reveal" style="--c:var(--profile)"><div class="over">User profile</div><h3>Scored from the executed subtask</h3><p>Which candidate the policy commits to: the object it picks up first, or the target it places the object at, checked against what the profile implies.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 RESULTS ================= -->
+<section class="band" id="results">
+  <div class="wrap wide">
+    <div class="eyebrow"><span class="no">07</span><span class="label">Experiments</span><span class="rule"></span></div>
+    <h2>Five questions, five findings</h2>
+    <p class="lede">Six VLA policies are evaluated zero-shot: <b>OpenVLA-OFT</b>, <b>π<sub>0</sub>-fast</b>, <b>π<sub>0.5</sub></b>, <b>GR00T-N1.6</b>, <b>SmolVLA</b> and <b>UniVLA</b>. Fine-tuning experiments start from π<sub>0.5</sub>, the strongest zero-shot baseline.</p>
+
+    <div class="findings">
+      <div class="finding full reveal">
+        <div class="finding-head"><span class="q">Q1</span><h3>Zero-shot: policies finish the task and ignore the preference</h3></div>
+        <p>Minimal layout edits keep no-preference success high, with π<sub>0.5</sub> at <b>97.6%</b>, so low satisfaction reflects preference following rather than a harder scene. On motion and skill preferences π<sub>0.5</sub> succeeds <b>97.5%</b> and <b>100%</b> of the time but satisfies the preference only <b>24.4%</b> and <b>25.0%</b>. A user profile changes the target itself and drops π<sub>0.5</sub> to <b>19.1%</b> success.</p>
+        <div class="table-wrap">
+          <p class="t-cap">Zero-shot results on LIBERO-SinglePref. SR and SA in %; No-Pref reports SR only.</p>
+          <table class="data">
+            <thead>
+              <tr class="grp"><th></th><th>No-Pref</th><th colspan="2">All-Pref</th><th colspan="2">Motion</th><th colspan="2">Skill</th><th colspan="2">User profile</th></tr>
+              <tr><th>Method</th><th>SR</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>OpenVLA-OFT</td><td>91.2</td><td>40.00</td><td>4.53</td><td>70.00</td><td>7.30</td><td>64.10</td><td>3.20</td><td>3.92</td><td>3.92</td></tr>
+              <tr><td>π<sub>0</sub>-fast</td><td>86.88</td><td>51.25</td><td>30.37</td><td>80.00</td><td class="best">27.60</td><td>73.08</td><td>18.27</td><td>17.65</td><td>17.65</td></tr>
+              <tr><td>π<sub>0.5</sub></td><td class="best">97.6</td><td class="best">66.67</td><td class="best">37.92</td><td class="best">97.50</td><td>24.38</td><td class="best">100.00</td><td class="best">25.00</td><td class="best">19.12</td><td class="best">19.12</td></tr>
+              <tr><td>GR00T-N1.6</td><td>88.3</td><td>51.67</td><td>27.45</td><td>90.00</td><td>20.70</td><td>76.92</td><td>11.54</td><td>9.80</td><td>9.80</td></tr>
+              <tr><td>SmolVLA</td><td>60.0</td><td>4.17</td><td>2.03</td><td>16.67</td><td>4.17</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td></tr>
+              <tr><td>UniVLA</td><td>80.8</td><td>45.83</td><td>21.52</td><td>90.00</td><td>10.17</td><td>71.79</td><td>3.59</td><td>0.00</td><td>0.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="finding full reveal">
+        <div class="finding-head"><span class="q">Q2</span><h3>Fine-tuning makes preferences learnable, and mixing beats sequencing</h3></div>
+        <p>LoRA fine-tuning on LIBERO-SinglePref lifts all-preference SR/SA to <b>85.0 / 82.3</b>. Fine-tuning on LIBERO first and preferences second costs no-preference success, which falls to <b>52.5%</b>. Mixing both in one run keeps it at <b>90.0%</b> and holds up under rewritten prompts: <b>73.0 / 70.2</b> on LIBERO-ComprePref against <b>44.0 / 42.6</b> for preference-only training.</p>
+        <div class="table-wrap">
+          <p class="t-cap">Fine-tuned results, all from the π<sub>0.5</sub> base checkpoint. * is the same task and preference under an unseen layout.</p>
+          <table class="data">
+            <thead>
+              <tr class="grp"><th></th><th>No-Pref</th><th colspan="2">All-Pref</th><th colspan="2">Motion</th><th colspan="2">Skill</th><th colspan="2">User profile</th><th colspan="2">ComprePref</th></tr>
+              <tr><th>Method</th><th>SR</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>π<sub>0.5</sub>-LoRA</td><td>–</td><td class="best">85.00</td><td>82.25</td><td class="best">90.00</td><td class="best">83.57</td><td>78.85</td><td>76.66</td><td>86.76</td><td>85.31</td><td>44.00</td><td>42.64</td></tr>
+              <tr><td>π<sub>0.5</sub>-Mix-LoRA</td><td class="best">90.00</td><td>84.38</td><td class="best">84.38</td><td>67.50</td><td>67.50</td><td class="best">88.46</td><td class="best">88.46</td><td class="best">91.18</td><td class="best">91.18</td><td class="best">73.00</td><td class="best">70.23</td></tr>
+              <tr><td>π<sub>0.5</sub>-Seq-LoRA</td><td>52.50</td><td>74.38</td><td>74.38</td><td>67.50</td><td>67.50</td><td>73.08</td><td>73.08</td><td>79.41</td><td>79.41</td><td>70.00</td><td>68.25</td></tr>
+              <tr><td>π<sub>0.5</sub>-LoRA*</td><td>–</td><td>41.15</td><td>30.15</td><td>58.00</td><td>46.12</td><td>32.86</td><td>30.98</td><td>37.14</td><td>22.48</td><td>–</td><td>–</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="finding full reveal">
+        <div class="finding-head"><span class="q">Q3–4</span><h3>Layout diversity helps more than extra demonstrations, and generalization stays hard</h3></div>
+        <p>In-domain SR and SA track each other at every data scale: when the task succeeds, the preference is usually satisfied too. At a fixed budget of 2.25K demonstrations, spreading them over more layouts (L1 → L3) helps more than adding demonstrations per layout, and adding matched no-preference missions (L4) helps again without any new layout. Unseen layouts improve with scale. Unseen layouts with a different task do not.</p>
+        <figure class="card fig" style="margin:14px 0 0">
+          <img src="assets/figures/scaling.png" alt="Task success and preference satisfaction against training data scale, for in-domain, unseen-layout, and unseen-layout-with-different-task evaluation" loading="lazy">
+          <figcaption><b>Scaling on LIBERO-PrefScale.</b> In-domain (blue), unseen layout (red), unseen layout with a different task (green). Dashed branches compare L1 (★, fewer layouts, denser), L3 (△, more layouts) and L4 (◇, matched no-preference missions) at 2.25K.</figcaption>
+        </figure>
+      </div>
+
+      <div class="finding reveal">
+        <div class="finding-head"><span class="q">Q5</span><h3>Composition is partly learnable, decomposition is not</h3></div>
+        <p>Trained on P<sub>A</sub> and P<sub>B</sub> separately, the policy composes P<sub>A</sub> + P<sub>B</sub> with <b>25.0%</b> SR and SA. Asked to recover P<sub>B</sub> after training on P<sub>A</sub> + P<sub>B</sub> and P<sub>A</sub>, it reaches <b>37.5%</b> SR and <b>0.0%</b> SA: the task gets done, the target preference does not.</p>
+      </div>
+      <div class="finding reveal">
+        <div class="finding-head"><span class="q">Q5</span><h3>Conflicts degrade execution instead of being resolved</h3></div>
+        <p>Under two conflicting preferences SR/SA fall from <b>73.0 / 63.4</b> to <b>66.0 / 47.8</b>, and neither preference dominates (gap <b>11.3</b>). When the preference argues against the task, following the task (<b>33.3%</b>) and following the preference (<b>29.2%</b>) are about as likely, and <b>37.5%</b> of trials complete neither.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======================= Teaser ======================= -->
-<section class="section pt-0">
-  <div class="container is-max-desktop">
-    <video class="teaser-video" autoplay muted loop playsinline>
-      <source src="static/videos/teaser.mp4" type="video/mp4">
-    </video>
-    <p class="teaser-caption has-text-centered">
-      The <em>same</em> pick, six ways. One user wants the mug grabbed by its handle; others want it
-      picked from the left side, from the back edge, carried higher, or moved slowly.
-      <b>LIBERO-PeRM</b> measures whether a policy can honor each request.
-    </p>
-  </div>
-</section>
-
-<!-- ======================= Stats strip ======================= -->
-<section class="section stats-strip">
-  <div class="container is-max-widescreen">
-    <div class="columns is-mobile is-multiline has-text-centered">
-      <div class="column stat"><p class="stat-number">3</p><p class="stat-label">Preference Tiers</p></div>
-      <div class="column stat"><p class="stat-number">5</p><p class="stat-label">Task Suites</p></div>
-      <div class="column stat"><p class="stat-number">5</p><p class="stat-label">Research Questions</p></div>
-      <div class="column stat"><p class="stat-number">300+</p><p class="stat-label">Mission Configurations</p></div>
-      <div class="column stat"><p class="stat-number">30+</p><p class="stat-label">Manipulation Skills</p></div>
-      <div class="column stat"><p class="stat-number">6</p><p class="stat-label">VLAs Evaluated</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= Abstract ======================= -->
-<section class="section" id="abstract">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Abstract</h2>
-    <div class="content abstract-text has-text-justified">
-      <p>
-        Robots deployed in homes will serve users whose expectations go beyond task success:
-        two people may request the same task yet want it executed in very different ways.
-        We present <b>LIBERO-PeRM</b>, a benchmark for <i>personalized robotic manipulation</i>
-        built on LIBERO that treats <b>user preference as a first-class variable of task execution</b>.
-        Preferences are organized in a three-tier hierarchy &mdash;
-        <b>motion-level</b> style (speed, acceleration, carrying height, path shape, obstacle clearance, rotation),
-        <b>skill-level</b> habits (how to grasp, how to release), and
-        <b>user-profile-level</b> plans (which object to use, in what order) &mdash;
-        and instantiated across 300+ preference-annotated mission configurations with an automated,
-        preference-aware demonstration generation pipeline.
-      </p>
-      <p>
-        Five task suites organize the benchmark around five research questions:
-        can frozen VLAs follow preferences <b>zero-shot</b>; can preferences be <b>learned</b>;
-        at what <b>data cost</b>; do learned preferences <b>compose</b>; and what happens under <b>conflict</b>.
-        Beyond binary success, every rollout is scored with a tiered <b>preference-satisfaction metric</b>,
-        calibrated between preferred and preference-agnostic (&ldquo;naive&rdquo;) demonstrations.
-      </p>
-      <p>
-        Zero-shot evaluation of six state-of-the-art VLAs reveals a consistent <b>personalization gap</b>:
-        appending a single preference clause to the instruction drops success rates by
-        <b>31&ndash;56 points</b> across capable models, while preference-aware fine-tuning
-        recovers most of the gap &mdash; establishing LIBERO-PeRM as both a diagnosis of, and a
-        training ground for, personalized manipulation.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= Motivation ======================= -->
-<section class="section alt-bg" id="motivation">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Why Personalized Manipulation?</h2>
-    <div class="columns is-vcentered">
-      <div class="column is-half">
-        <div class="content has-text-justified">
-          <p>
-            Benchmarks for language-conditioned manipulation ask <i>&ldquo;did the robot complete the task?&rdquo;</i>
-            &mdash; a binary notion of success that ignores <i>how</i> the task was done.
-            Real users care about the <i>how</i>: keep drinks away from the laptop, carry the knife low,
-            slow down near the glassware, use the blue mug because it is mine.
-          </p>
-          <p>
-            We recognize <b>preference as the cornerstone of personalization</b>.
-            A preference is an additional language clause attached to a task instruction that
-            constrains execution without changing the goal. LIBERO-PeRM asks whether current
-            VLAs can parse such clauses, ground them in behavior, learn them from demonstrations,
-            compose them &mdash; and stay loyal to the task when a preference fights it.
-          </p>
-        </div>
-      </div>
-      <div class="column is-half">
-        <!-- TODO: replace with <img src="static/images/motivation.png"> -->
-        <div class="media-placeholder ratio-4x3">
-          <div class="placeholder-inner">
-            <i class="fas fa-image"></i>
-            <p>Figure &mdash; task success vs. preference compliance</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= 3-tier preference system ======================= -->
-<section class="section" id="preferences">
-  <div class="container is-max-widescreen">
-    <h2 class="title is-3 section-title has-text-centered">A Three-Tier Preference System</h2>
-    <p class="section-lead has-text-centered">
-      Preferences act at three levels of the manipulation stack, from continuous motion style to discrete task plans.
-    </p>
-    <div class="columns is-variable is-5 mt-5">
-      <div class="column">
-        <div class="tier-card">
-          <div class="tier-icon low"><i class="fas fa-wave-square"></i></div>
-          <h3 class="title is-4">Motion</h3>
-          <p class="tier-sub">low-level &middot; continuous</p>
-          <p class="tier-desc">Style constraints on the end-effector trajectory, checked per-step from physical state.</p>
-          <ul class="tier-examples">
-            <li>&ldquo;Move slower&rdquo; <span class="tag-pref">speed</span></li>
-            <li>&ldquo;Accelerate gently&rdquo; <span class="tag-pref">acceleration</span></li>
-            <li>&ldquo;Carry it higher above the table&rdquo; <span class="tag-pref">height</span></li>
-            <li>&ldquo;Take the direct path&rdquo; <span class="tag-pref">straightness</span></li>
-            <li>&ldquo;Keep away from the wine bottle&rdquo; <span class="tag-pref">avoidance</span></li>
-            <li>&ldquo;Don't tilt it while moving&rdquo; <span class="tag-pref">rotation</span></li>
-          </ul>
-        </div>
-      </div>
-      <div class="column">
-        <div class="tier-card">
-          <div class="tier-icon skill"><i class="fas fa-hand"></i></div>
-          <h3 class="title is-4">Skill</h3>
-          <p class="tier-sub">mid-level &middot; discrete choice</p>
-          <p class="tier-desc">Habits in how a primitive skill is performed &mdash; same skill, different manner.</p>
-          <ul class="tier-examples">
-            <li>&ldquo;Pick it up from the side&rdquo; <span class="tag-pref">grasp style</span></li>
-            <li>&ldquo;Grab it by the rim / edge&rdquo; <span class="tag-pref">grasp point</span></li>
-            <li>&ldquo;Release it just above the basket&rdquo; <span class="tag-pref">release height</span></li>
-          </ul>
-        </div>
-      </div>
-      <div class="column">
-        <div class="tier-card">
-          <div class="tier-icon profile"><i class="fas fa-user-gear"></i></div>
-          <h3 class="title is-4">User Profile</h3>
-          <p class="tier-sub">high-level &middot; task plan</p>
-          <p class="tier-desc">Preferences that reshape the task plan itself: object choice and subtask order.</p>
-          <ul class="tier-examples">
-            <li>&ldquo;Prefer the blue objects&rdquo; <span class="tag-pref">object choice</span></li>
-            <li>&ldquo;Do the bowl first&rdquo; <span class="tag-pref">ordering</span></li>
-            <li>&ldquo;Use my mug, not the glass&rdquo; <span class="tag-pref">ownership</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!-- TODO: replace with <img src="static/images/tier_overview.png"> -->
-    <div class="media-placeholder ratio-21x9 mt-5">
-      <div class="placeholder-inner">
-        <i class="fas fa-diagram-project"></i>
-        <p>Figure &mdash; three-tier preference taxonomy with example rollouts</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= Benchmark ======================= -->
-<section class="section alt-bg" id="benchmark">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">The Benchmark: Five Task Suites</h2>
-    <div class="content has-text-justified">
-      <p>
-        LIBERO-PeRM extends LIBERO scenes with preference-conditioned layouts and language.
-        An automated pipeline &mdash; LLM-assisted layout generation, a library of 30+ heuristic
-        manipulation skills, and collision-free motion planning &mdash; renders <b>preference-consistent
-        demonstrations</b> for every mission, alongside preference-agnostic &ldquo;naive&rdquo; twins
-        used for metric calibration. Each demonstration ships with gen-time metadata:
-        subtask boundaries, applied preference parameters, and per-preference raw measurements.
-      </p>
-    </div>
-    <div class="table-container">
-      <table class="table is-fullwidth is-hoverable suite-table">
-        <thead>
-          <tr><th>Suite</th><th>What it probes</th><th>Serves</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>SingPref</b></td>
-            <td>Single preference attached to a task, canonical and paraphrased language; 40 evaluation missions</td>
-            <td>RQ1, RQ2</td>
-          </tr>
-          <tr>
-            <td><b>Scale</b></td>
-            <td>Learning curves over (K layouts &times; N demos/layout), held-out layout generalization</td>
-            <td>RQ3</td>
-          </tr>
-          <tr>
-            <td><b>Compose</b></td>
-            <td>Multi-preference execution: train A, B separately &rarr; test A+B (compose); train A+B &rarr; test A, B (decompose)</td>
-            <td>RQ4</td>
-          </tr>
-          <tr>
-            <td><b>Conflict</b></td>
-            <td>Opposing preference pairs and task&ndash;preference conflicts, with a task-first ground truth</td>
-            <td>RQ5</td>
-          </tr>
-          <tr>
-            <td><b>Comprehensive</b></td>
-            <td>Language robustness: no hint &rarr; explicit &rarr; idiomatic &rarr; commonsense phrasing (L0&ndash;L3)</td>
-            <td>RQ1 (language axis)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- TODO: replace with <img src="static/images/pipeline.png"> -->
-    <div class="media-placeholder ratio-21x9 mt-4">
-      <div class="placeholder-inner">
-        <i class="fas fa-gears"></i>
-        <p>Figure &mdash; preference-aware demonstration generation pipeline</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= Research questions ======================= -->
-<section class="section" id="rqs">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title has-text-centered">Five Research Questions</h2>
-    <p class="section-lead has-text-centered">
-      A capability story in five acts: from raw ability, through cost, to compositional structure and robustness.
-    </p>
-
-    <div class="rq-chain mt-5">
-      <span class="rq-chip">Can it?</span><span class="rq-arrow">&rarr;</span>
-      <span class="rq-chip">Can it learn?</span><span class="rq-arrow">&rarr;</span>
-      <span class="rq-chip">At what cost?</span><span class="rq-arrow">&rarr;</span>
-      <span class="rq-chip">Does it compose?</span><span class="rq-arrow">&rarr;</span>
-      <span class="rq-chip">Does it survive conflict?</span>
-    </div>
-
-    <div class="rq-list mt-5">
-      <div class="rq-item">
-        <div class="rq-num">RQ1</div>
-        <div>
-          <p class="rq-title">Zero-shot personalization</p>
-          <p class="rq-body">Can a frozen VLA follow a preference just from language &mdash; single and multi,
-          canonical and paraphrased? If yes, training is redundant; if no, that is the benchmark's core negative result.</p>
-        </div>
-      </div>
-      <div class="rq-item">
-        <div class="rq-num">RQ2</div>
-        <div>
-          <p class="rq-title">Learning ability</p>
-          <p class="rq-body">Given ample in-distribution preference demonstrations, does LoRA fine-tuning reach a
-          preference-following ceiling? The gap to RQ1 is the inference-time personalization deficit.</p>
-        </div>
-      </div>
-      <div class="rq-item">
-        <div class="rq-num">RQ3</div>
-        <div>
-          <p class="rq-title">Learning efficiency</p>
-          <p class="rq-body">Sweeping (K layouts, N demos) jointly, where does the learning curve saturate?
-          Turns &ldquo;can it learn&rdquo; into &ldquo;is it affordable to teach&rdquo;.</p>
-        </div>
-      </div>
-      <div class="rq-item">
-        <div class="rq-num">RQ4</div>
-        <div>
-          <p class="rq-title">Preference composition</p>
-          <p class="rq-body">Train on A and B separately &mdash; can the model execute A+B?
-          Train on A+B jointly &mdash; can it still do B alone? Probes whether preference representations are disentangled.</p>
-        </div>
-      </div>
-      <div class="rq-item">
-        <div class="rq-num">RQ5</div>
-        <div>
-          <p class="rq-title">Preference conflict</p>
-          <p class="rq-body">Opposing preferences, and preferences that physically contradict the task.
-          Under a task-first stance, we measure whether the model stays loyal to the task, yields to the preference, or collapses.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= Metrics ======================= -->
-<section class="section alt-bg" id="metrics">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Beyond Success Rate: Tiered Preference Satisfaction</h2>
-    <div class="content has-text-justified">
-      <p>
-        Every rollout receives a task <b>success rate</b> (BDDL goal predicates) and a
-        <b>preference-satisfaction score per tier</b>. Each preference defines a raw physical
-        measurement &mdash; peak acceleration, carrying height, minimum clearance to the avoided
-        object, subtask-plan compliance &mdash; which is <b>dual-anchor calibrated</b>:
-        preference-agnostic naive demonstrations anchor 0, preferred demonstrations anchor 1.
-        Calibrated scores map to four satisfaction buckets, making numbers comparable across
-        preference types and missions.
-      </p>
-      <p>
-        Under conflict, the benchmark takes a <b>task-first stance</b>: the correct behavior is to
-        complete the task and ignore the contradicting preference. Dedicated diagnostics &mdash;
-        <i>Override Resistance</i>, <i>Priority Index</i>, and <i>Spurious Preference Application
-        Rate</i> &mdash; characterize where a model sits between task loyalty and preference obedience.
-      </p>
-    </div>
-    <div class="columns has-text-centered metric-cards">
-      <div class="column">
-        <div class="metric-card">
-          <p class="metric-name">Success Rate</p>
-          <p class="metric-desc">Did the task get done? BDDL goal predicates.</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="metric-card">
-          <p class="metric-name">Preference Satisfaction</p>
-          <p class="metric-desc">Was it done the user's way? Dual-anchor calibrated, per tier.</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="metric-card">
-          <p class="metric-name">Conflict Diagnostics</p>
-          <p class="metric-desc">Task-first? Override Resistance &amp; Priority Index.</p>
-        </div>
-      </div>
-      <div class="column">
-        <div class="metric-card">
-          <p class="metric-name">Compose / Decompose</p>
-          <p class="metric-desc">Joint score vs. its single-preference constituents.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= Results ======================= -->
-<section class="section" id="results">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">Preliminary Results</h2>
-    <p class="section-lead">
-      Zero-shot evaluation on the 40-mission SingPref suite. <i>base</i> = task instruction only;
-      <i>pref</i> = task + one preference clause. Best representation per VLA; numbers will be
-      finalized in the paper.
-    </p>
-
-    <div class="table-container mt-4">
-      <table class="table is-fullwidth is-striped is-hoverable results-table">
-        <thead>
-          <tr><th>VLA</th><th class="has-text-right">Base SR</th><th class="has-text-right">Pref SR</th><th class="has-text-right">Drop</th><th class="has-text-right">Overall</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>&pi;0.5 (official)</td><td class="has-text-right">97.6%</td><td class="has-text-right">66.7%</td><td class="has-text-right drop">&minus;31</td><td class="has-text-right"><b>82.1%</b></td></tr>
-          <tr><td>OpenVLA-OFT (4-in-1)</td><td class="has-text-right">91.2%</td><td class="has-text-right">&mdash;<sup>&dagger;</sup></td><td class="has-text-right drop">&mdash;</td><td class="has-text-right">&mdash;</td></tr>
-          <tr><td>GR00T N1.6 (4-in-1)</td><td class="has-text-right">88.3%</td><td class="has-text-right">51.7%</td><td class="has-text-right drop">&minus;37</td><td class="has-text-right"><b>70.0%</b></td></tr>
-          <tr><td>UniVLA (best-of-4)</td><td class="has-text-right">80.8%</td><td class="has-text-right">45.8%</td><td class="has-text-right drop">&minus;35</td><td class="has-text-right"><b>63.3%</b></td></tr>
-          <tr><td>SmolVLA</td><td class="has-text-right">60.0%</td><td class="has-text-right">4.2%</td><td class="has-text-right drop">&minus;56</td><td class="has-text-right"><b>32.1%</b></td></tr>
-          <tr><td>X-VLA (best-of-4 LoRA)</td><td class="has-text-right">17.5%</td><td class="has-text-right">11.7%</td><td class="has-text-right drop">&minus;6</td><td class="has-text-right"><b>14.6%</b></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="table-footnote"><sup>&dagger;</sup> preference condition pending re-run with the corrected prompt template.</p>
-
-    <div class="findings mt-6">
-      <h3 class="title is-4">Key Findings</h3>
-      <div class="finding">
-        <div class="finding-num">1</div>
-        <p><b>The personalization gap is real.</b> Every capable VLA loses 31&ndash;56 points of success
-        the moment a single preference clause is appended &mdash; current models parse the task but not the <i>how</i>.</p>
-      </div>
-      <div class="finding">
-        <div class="finding-num">2</div>
-        <p><b>Preferences are learnable.</b> LoRA fine-tuning on preference-consistent demonstrations
-        lifts &pi;0.5-base to <b>85%</b> preference-conditioned success on the same suite &mdash; the ceiling exists.</p>
-      </div>
-      <div class="finding">
-        <div class="finding-num">3</div>
-        <p><b>How you mix data matters.</b> Sequentially fine-tuning an already-LIBERO-tuned checkpoint
-        on preference data underperforms (74.4% vs. 85%); joint mixing of generic and preference
-        demonstrations is the stronger recipe.</p>
-      </div>
-      <div class="finding">
-        <div class="finding-num">4</div>
-        <p><b>A layout-shift stress test for free.</b> Models trained per-suite on stock LIBERO collapse
-        under LIBERO-PeRM's modest scene edits (96.7% &rarr; 17.9% on matched missions), while
-        multi-suite-trained models keep 70&ndash;91% &mdash; the benchmark doubles as a generalization probe.</p>
-      </div>
-    </div>
-
-    <!-- TODO: replace with <img src="static/images/results_overview.png"> -->
-    <div class="media-placeholder ratio-21x9 mt-5">
-      <div class="placeholder-inner">
-        <i class="fas fa-chart-column"></i>
-        <p>Figure &mdash; per-tier satisfaction breakdown &amp; learning curves</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= Demos ======================= -->
-<section class="section alt-bg" id="demos">
-  <div class="container is-max-widescreen">
-    <h2 class="title is-3 section-title has-text-centered">Preference Demonstrations</h2>
-    <p class="section-lead has-text-centered">
-      Paired rollouts across the three preference tiers. In each clip: <b>preferred</b> execution (left),
-      its preference-agnostic <b>naive</b> twin (middle), and the per-preference <b>raw measurement</b>
-      used for dual-anchor metric calibration (right).
-    </p>
-
-    <h3 class="title is-4 tier-group-title"><span class="tier-dot low"></span>Motion-Level</h3>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/1-2_113_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">speed</span> &ldquo;Slow down&rdquo; &mdash; pick up the butter and put it in the basket</p>
-    </div>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/1-5_114_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">height offset</span> &ldquo;Close to ground when moving&rdquo; &mdash; pick the chocolate pudding and place it in the basket</p>
-    </div>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/1-7_104_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">height offset</span> &ldquo;Move higher&rdquo; &mdash; put the bowl on the plate</p>
-    </div>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/1-8_114_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">rotation</span> &ldquo;Rotate when moving&rdquo; &mdash; pick up the chocolate pudding and put it in the basket</p>
-    </div>
-
-    <h3 class="title is-4 tier-group-title"><span class="tier-dot skill"></span>Skill-Level</h3>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/2-1_019_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">grasp point</span> &ldquo;Pick from right edge&rdquo; &mdash; put the black bowl on the plate</p>
-    </div>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/2-3_077_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">grasp point</span> &ldquo;Pick by handle&rdquo; &mdash; put the white mug on the left plate</p>
-    </div>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/2-5_116_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">grasp style</span> &ldquo;Pick from left side&rdquo; &mdash; put the ketchup in the basket</p>
-    </div>
-
-    <h3 class="title is-4 tier-group-title"><span class="tier-dot profile"></span>User-Profile-Level</h3>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/3-2_001_1_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">object choice</span> &ldquo;Prefer red objects&rdquo; &mdash; put the bowl in the bottom drawer and close it</p>
-    </div>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/3-3_117_2_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">object choice</span> &ldquo;Prefer yellow objects&rdquo; &mdash; pick the milk and place it in the basket</p>
-    </div>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/3-4_104_1_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">object choice</span> &ldquo;Prefer blue objects&rdquo; &mdash; put the bowl on the plate</p>
-    </div>
-    <div class="compare-block">
-      <video controls muted loop playsinline preload="metadata"><source src="static/videos/compare/3-5_064_1_compare.mp4" type="video/mp4"></video>
-      <p class="compare-caption"><span class="demo-tag">object choice</span> &ldquo;Prefer bigger objects&rdquo; &mdash; pick up a tomato sauce and put it in the basket</p>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= BibTeX ======================= -->
-<section class="section" id="bibtex">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title">BibTeX</h2>
-    <div class="bibtex-box">
-      <button class="button is-small copy-btn" id="copyBibtex" title="Copy to clipboard">
-        <span class="icon"><i class="fas fa-copy"></i></span><span>Copy</span>
-      </button>
-<pre id="bibtexText">@article{li2026liberoperm,
-  title   = {LIBERO-PeRM: Benchmarking Personalized Robotic Manipulation},
-  author  = {Li, Zhixu and others},
-  journal = {Preprint},
-  year    = {2026}
+<!-- ================= 08 CITATION ================= -->
+<section class="band alt" id="citation">
+  <div class="wrap">
+    <div class="eyebrow"><span class="no">08</span><span class="label">Citation</span><span class="rule"></span></div>
+    <h2>Cite this work</h2>
+    <div class="card bibtex reveal">
+      <button class="copy" id="copyBibtex" type="button">Copy BibTeX</button>
+<pre id="bibtex">@inproceedings{li2026liberoperm,
+  title     = {LIBERO-PeRM: Benchmarking Personalized Robotic Manipulation},
+  author    = {Li, Zhixu and others},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS),
+               Evaluations and Datasets Track},
+  year      = {2026}
 }</pre>
     </div>
   </div>
 </section>
 
-<!-- ======================= Footer ======================= -->
-<footer class="footer">
-  <div class="container is-max-desktop">
-    <div class="content has-text-centered">
-      <p>
-        This website is adapted from the
-        <a href="https://nerfies.github.io/" target="_blank" rel="noopener">Nerfies</a> /
-        <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>,
-        with layout inspiration from
-        <a href="https://cwru-aism.github.io/vla-interp-page/" target="_blank" rel="noopener">VLA Interpretability</a> and
-        <a href="https://dmw-cvpr.github.io/" target="_blank" rel="noopener">Drive My Way</a> (used with permission).
-        Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.
-      </p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="legend">
+      <span><i style="background:var(--motion)"></i>Motion preference</span>
+      <span><i style="background:var(--skill)"></i>Skill preference</span>
+      <span><i style="background:var(--profile)"></i>User profile</span>
+      <span><i style="background:var(--multi)"></i>Second preference in a pair</span>
     </div>
+    <p>LIBERO-PeRM — from <i>“Can the robot do the task?”</i> to <i>“Can it do the task my way?”</i></p>
+    <p>Built on <a href="https://libero-project.github.io/" target="_blank" rel="noopener">LIBERO</a>. Clips are rendered from simulation demonstrations. Page layout modeled on the <a href="https://liulin815.github.io/LIBERO-Recovery/" target="_blank" rel="noopener">LIBERO-Recover</a> project page.</p>
   </div>
 </footer>
 
-<script src="static/js/index.js"></script>
+<script src="assets/tasks/tasks.js?v=1"></script>
+<script src="js/main.js?v=1" defer></script>
 </body>
 </html>

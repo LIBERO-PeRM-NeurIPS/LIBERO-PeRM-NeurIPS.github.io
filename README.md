@@ -1,31 +1,25 @@
-# LIBERO-PeRM Project Page
+# LIBERO-PeRM project page
 
-Static project page for **LIBERO-PeRM: Benchmarking Personalized Robotic Manipulation**.
-
-Adapted from the [Nerfies](https://nerfies.github.io/) / [Academic Project Page Template](https://github.com/eliahuhorwitz/Academic-project-page-template) (CC BY-SA 4.0), with layout inspiration from [VLA Interpretability](https://cwru-aism.github.io/vla-interp-page/) and [Drive My Way](https://dmw-cvpr.github.io/), used with permission.
-
-## Structure
+Static site for *LIBERO-PeRM: Benchmarking Personalized Robotic Manipulation* (NeurIPS 2026, Evaluations & Datasets Track).
 
 ```
-index.html              # single-page site
-static/css/index.css    # all custom styles
-static/js/index.js      # navbar burger, bibtex copy
-static/videos/          # drop demo mp4s here (placeholders in index.html marked TODO)
-static/images/          # drop figures here (placeholders in index.html marked TODO)
+index.html            page content
+css/style.css         styles
+js/main.js            interactions; set the paper / code / dataset URLs in LINKS at the top
+assets/figures/       figures from the paper
+assets/reel/          square clips for the hero video wall
+assets/tasks/         one clip per task (rollouts + satisfaction curves) and tasks.js, the data the page reads
 ```
 
-## Replacing placeholders
+`assets/tasks/` and `assets/reel/` are generated from the main repository:
 
-Every media placeholder in `index.html` is a `div.media-placeholder` preceded by a
-`<!-- TODO: replace ... -->` comment showing the exact `<video>`/`<img>` tag to swap in.
-
-## Local preview
-
-```
-python3 -m http.server 8000
-# open http://localhost:8000
+```bash
+cd LIBERO
+MUJOCO_GL=egl python scripts/render_task_gallery.py     # render every task that has demonstrations
+python scripts/review_task_gallery.py                   # hold back clips whose curves need a look
+python scripts/build_page_assets.py                     # copy clips here and rewrite assets/tasks/tasks.js
 ```
 
-## License
+Preview locally with a static file server in this directory. The page also opens from `file://`.
 
-CC BY-SA 4.0 (inherited from the template).
+Layout modeled on the [LIBERO-Recover](https://liulin815.github.io/LIBERO-Recovery/) project page.
