@@ -1,18 +1,19 @@
 /* LIBERO-PeRM project page.
    One idea carries the page: the three preference levels are three lanes. They move as lanes of
    rollouts in the hero, and the same three lanes list all 37 preferences below it.
-   The rail and the hero sit on a light blue with navy type, the body is a cool paper;
-   the project blue marks selected states, and the only other colour is the level a thing belongs to,
-   which always sits on white. */
+   The rail is light blue, the hero is white with dark type and the wordmark's PeRM in the project blue,
+   the body is a cool paper. The project blue also marks selected states; the only other colour is the
+   level a thing belongs to. */
 
 :root {
   color-scheme: light;
   --ink: #0f1a30;            /* text, headings, selected states */
   --accent: #0071e3;         /* the project blue: selected states, rules, question tags */
-  /* surface of the rail, hero and citation block. Text on it uses one colour only (rank comes from size and weight). */
+  /* surface tokens. The values here are the rail's; the hero overrides them with white, and the citation block is a plain sheet. */
   --wash: #a6cff9;
   --wash-clear: rgba(166, 207, 249, 0);
   --on-wash: #0f1a30;        /* 10.7:1 on the wash */
+  --on-wash-2: #0f1a30;      /* secondary text on the surface */
   --wash-line: rgba(15, 26, 48, .2);
   --wash-edge: rgba(15, 26, 48, .55);
   --wash-fill: rgba(255, 255, 255, .4);
@@ -56,7 +57,7 @@ a { color: inherit; }
 button { font: inherit; color: inherit; }
 sub, sup { line-height: 0; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.rail :focus-visible, .hero :focus-visible, .bibtex :focus-visible { outline-color: var(--on-wash); }
+.rail :focus-visible { outline-color: var(--on-wash); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .skip { position: fixed; left: 12px; top: -60px; z-index: 50; background: var(--sheet); color: var(--ink); padding: 10px 14px; border-radius: var(--r); font-weight: 600; }
 .skip:focus { top: 12px; }
@@ -80,17 +81,21 @@ a.soon:hover { text-decoration: none; }
 main { margin-left: var(--rail); min-width: 0; }
 
 /* ---------- hero ---------- */
-.hero { --h: clamp(620px, 100vh, 900px); background: var(--wash); color: var(--on-wash);
+.hero { --h: clamp(620px, 100vh, 900px);
+  --wash: #ffffff; --wash-clear: rgba(255, 255, 255, 0); --on-wash: var(--ink); --on-wash-2: var(--muted);
+  --wash-line: var(--rule); --wash-edge: var(--rule-strong); --wash-fill: var(--paper); --wash-btn: var(--accent); --on-wash-btn: #ffffff;
+  background: var(--wash); color: var(--on-wash); border-bottom: 1px solid var(--rule);
   display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(24px, 3vw, 48px); padding-left: var(--pad); min-height: var(--h); overflow: hidden; }
 .hero-copy { align-self: center; padding: 56px 0; max-width: 660px; }
-.venue { font: 500 16px/1.3 var(--cond); }
+.venue { font: 500 16px/1.3 var(--cond); color: var(--on-wash-2); }
 .hero h1 { font: 700 clamp(50px, 5.7vw, 98px)/.92 var(--cond); letter-spacing: -.02em; margin: 14px 0 18px -3px; }
+.hero h1 .perm { color: var(--accent); }
 .tagline { font: 400 clamp(19px, 1.7vw, 23px)/1.35 var(--body); max-width: 30em; }
 .authors { margin-top: 30px; display: grid; gap: 8px; }
 .names { font-size: 16px; line-height: 1.75; font-weight: 500; }
 .names span, .affil span { white-space: nowrap; }
-.authors sup { font-size: .66em; margin-left: 1px; }
-.affil { font-size: 14px; line-height: 1.7; }
+.authors sup { font-size: .66em; margin-left: 1px; color: var(--on-wash-2); }
+.affil { font-size: 14px; line-height: 1.7; color: var(--on-wash-2); }
 .affil span { margin-right: 14px; }
 .affil sup { margin: 0 1px 0 0; }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
@@ -102,27 +107,27 @@ main { margin-left: var(--rail); min-width: 0; }
 .facts { display: grid; grid-template-columns: repeat(4, auto); justify-content: start; gap: 0; margin-top: 40px; border-top: 1px solid var(--wash-line); }
 .facts > div { padding: 14px 26px 0 0; margin-right: 26px; border-right: 1px solid var(--wash-line); }
 .facts > div:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
-.facts dt { font: 500 14px/1.2 var(--cond); }
+.facts dt { font: 500 14px/1.2 var(--cond); color: var(--on-wash-2); }
 .facts dd { font: 700 25px/1.15 var(--cond); margin-top: 4px; }
-.facts dd span { display: block; font: 400 13.5px/1.3 var(--body); max-width: 11em; margin-top: 3px; }
+.facts dd span { display: block; font: 400 13.5px/1.3 var(--body); color: var(--on-wash-2); max-width: 11em; margin-top: 3px; }
 
 /* three lanes of rollouts: motion moves up, skill down, user profile up */
 .lanes { --tile: clamp(124px, 11.6vw, 178px); display: grid; grid-template-columns: repeat(3, var(--tile)); gap: 14px; padding-right: clamp(14px, 2vw, 28px); height: var(--h); }
 .lane { position: relative; overflow: hidden; height: 100%; }
 .lane-head { position: absolute; inset: 0 0 auto 0; z-index: 2; padding: 18px 0 30px; background: linear-gradient(var(--wash) 62%, var(--wash-clear));
   font: 600 15.5px/1.2 var(--cond); pointer-events: none; }
-.lane-head b { display: inline-block; font-weight: 600; background: #fff; color: var(--ct); padding: 4px 9px 5px; border-radius: 4px; }
-.lane-head small { display: block; font: 400 13px/1.3 var(--body); color: var(--on-wash); margin-top: 5px; }
+.lane-head b { display: inline-block; font-weight: 600; background: var(--cb); color: var(--ct); padding: 4px 9px 5px; border-radius: 4px; }
+.lane-head small { display: block; font: 400 13px/1.3 var(--body); color: var(--on-wash-2); margin-top: 5px; }
 .lane::after { content: ""; position: absolute; inset: auto 0 0 0; height: 80px; background: linear-gradient(var(--wash-clear), var(--wash)); pointer-events: none; }
 .lane-track { animation: lane-up var(--dur, 80s) linear infinite; will-change: transform; }
 .lane.down .lane-track { animation-name: lane-down; }
 @keyframes lane-up { to { transform: translateY(-50%); } }
 @keyframes lane-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
 .lanes:hover .lane-track, .lanes:focus-within .lane-track { animation-play-state: paused; }
-.tile { display: block; margin-bottom: 14px; background: var(--sheet); border-radius: var(--r); overflow: hidden; text-decoration: none; color: var(--ink); }
+.tile { display: block; margin-bottom: 14px; background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; text-decoration: none; color: var(--ink); }
 .tile video { width: 100%; aspect-ratio: 1; object-fit: cover; background: #dfe6f0; }
 .tile span { display: block; border-top: 4px solid var(--c); padding: 7px 10px 10px; font: 500 14px/1.22 var(--cond); min-height: 3.1em; }
-.tile:hover, .tile:focus-visible { outline: 3px solid var(--on-wash); outline-offset: 1px; }
+.tile:hover, .tile:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
 
 /* ---------- sections ---------- */
 .sec { padding: clamp(64px, 8vw, 104px) var(--pad) 0; max-width: 1320px; }
@@ -250,7 +255,8 @@ table.data td.best { font-weight: 700; color: var(--ink); }
 table.data small { font-size: .8em; font-weight: 400; color: var(--muted); margin-left: 1px; }
 
 /* ---------- citation, footer ---------- */
-.bibtex { margin-top: 22px; max-width: 980px; background: var(--wash); color: var(--on-wash); border-radius: var(--r); padding: 18px 20px; position: relative; }
+.bibtex { margin-top: 22px; max-width: 980px; background: var(--sheet); color: var(--ink); border: 1px solid var(--rule); border-radius: var(--r); padding: 18px 20px; position: relative;
+  --wash-btn: var(--accent); --on-wash-btn: #ffffff; }
 .bibtex pre { margin: 0; font: 400 14px/1.6 var(--code); overflow-x: auto; padding-right: 130px; }
 .bibtex .btn { position: absolute; right: 14px; top: 14px; padding: 9px 13px 10px; font-size: 15px; }
 .foot { padding: 56px var(--pad) 48px; font-size: 15px; color: var(--muted); max-width: 1320px; }
