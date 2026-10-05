@@ -133,7 +133,7 @@
       var clips = META.reel.filter(function (c) { return c.tier === lv; });
       if (!clips.length) return;
       var lane = el("div", "lane lv-" + lv + (i === 1 ? " down" : ""));
-      lane.appendChild(el("div", "lane-head", esc(LEVELS[lv].name) + "<small>" + esc(LEVELS[lv].brief) + "</small>"));
+      lane.appendChild(el("div", "lane-head", "<b>" + esc(LEVELS[lv].name) + "</b><small>" + esc(LEVELS[lv].brief) + "</small>"));
       var html = clips.map(function (c) {
         return '<a class="tile" href="#pref=' + c.family + '"><video src="assets/reel/' + c.id + '.mp4" muted loop playsinline preload="none" disablepictureinpicture></video><span>' + esc(c.title) + "</span></a>";
       }).join("");
