@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LIBERO-PeRM — Benchmarking Personalized Robotic Manipulation</title>
+  <title>LIBERO-PeRM: Benchmarking Personalized Robotic Manipulation</title>
   <meta name="description" content="LIBERO-PeRM: a benchmark for personalized robotic manipulation. Three preference levels, five task suites, 312 tasks, paired demonstrations with and without preferences, and preference-satisfaction metrics.">
   <link rel="canonical" href="https://libero-perm-neurips.github.io/">
   <meta property="og:type" content="website">
@@ -12,286 +12,237 @@
   <meta property="og:description" content="Can a policy do the task the way you want it done? Three preference levels, five task suites, 312 tasks, paired demonstrations and preference-satisfaction metrics. NeurIPS 2026 Evaluations &amp; Datasets Track.">
   <meta property="og:image" content="https://libero-perm-neurips.github.io/assets/figures/overview.png">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f1a30">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- webfont loads async so an unreachable fonts host never blocks first paint -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"></noscript>
-  <link rel="stylesheet" href="css/style.css?v=4">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='4' fill='%230071e3'/><circle cx='8' cy='8' r='3.2' fill='white'/></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%230f1a30'/><rect x='3' y='3' width='2.6' height='10' fill='%23e0483e'/><rect x='6.7' y='3' width='2.6' height='10' fill='%23168fcf'/><rect x='10.4' y='3' width='2.6' height='10' fill='%235b3cc4'/></svg>">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
-
-<header class="site-header" id="top">
-  <div class="header-inner">
-    <a class="brand" href="#top"><span class="brand-dot"></span><span>LIBERO-<b>PeRM</b></span></a>
-    <nav class="nav" aria-label="Sections">
-      <a href="#overview">Abstract</a>
+<header class="rail" id="rail">
+  <a class="rail-mark" href="#top">LIBERO-PeRM</a>
+  <button class="rail-toggle" id="railToggle" type="button" aria-expanded="false" aria-controls="railPanel">Sections</button>
+  <div class="rail-panel" id="railPanel">
+    <nav class="rail-nav" aria-label="Sections">
       <a href="#preferences">Preferences</a>
-      <a href="#pipeline">Pipeline</a>
-      <a href="#suites">Suites</a>
-      <a href="#tasks">Tasks</a>
-      <a href="#metrics">Metrics</a>
+      <a href="#abstract">Abstract</a>
+      <a href="#suites">Task suites</a>
+      <a href="#tasks">Task explorer</a>
+      <a href="#pipeline">How it is built</a>
+      <a href="#metrics">How it is scored</a>
       <a href="#results">Results</a>
-      <a href="#citation">Citation</a>
+      <a href="#citation">Cite</a>
     </nav>
-    <a class="hbtn" data-link="code" title="Code on GitHub">
-      <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-      Code
-    </a>
+    <div class="rail-links">
+      <a data-link="paper">Paper</a>
+      <a data-link="code">Code</a>
+      <a data-link="dataset">Dataset</a>
+    </div>
   </div>
 </header>
 
-<main>
+<main id="main">
 
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="reel" id="reel" aria-hidden="true">
-    <div class="reel-row" data-dir="left" style="--dur:92s" data-clips="1-1_004,2-1_019,3-2_001_1,1-7_104,2-8_ood3,3-8_081_2,1-4_034,2-12_085"></div>
-    <div class="reel-row" data-dir="right" style="--dur:108s" data-clips="2-5_116,3-4_104_1,1-5_114,2-7_ood1,3-9_118_1,1-8_061,2-14_068,2-3_077"></div>
-  </div>
-  <div class="scrim" aria-hidden="true"></div>
-
-  <div class="wrap hero-copy">
-    <div class="badges">
-      <span class="badge">NeurIPS 2026 · Evaluations &amp; Datasets Track</span>
-      <span class="badge">Benchmark &amp; Dataset</span>
-      <span class="badge">312 tasks</span>
-    </div>
-
-    <h1>LIBERO-<span class="hl">PeRM</span></h1>
-    <p class="hero-tag">Benchmarking <b>Personalized Robotic Manipulation</b> — can a policy do the task <b>the way you want it done</b>?</p>
+<!-- ================= hero: copy on the left, one moving lane of rollouts per preference level ================= -->
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <p class="venue">NeurIPS 2026, Evaluations and Datasets Track</p>
+    <h1>LIBERO-PeRM</h1>
+    <p class="tagline">Benchmarking personalized robotic manipulation: can a policy do the task the way you want it done?</p>
 
     <div class="authors">
       <p class="names">
-        <span>Zhixu Li<sup>1,*,†</sup>,</span>
-        <span>Keqian Tang<sup>1,*</sup>,</span>
-        <span>Litian Gong<sup>1,*</sup>,</span>
-        <span>Jingyu Yao<sup>2</sup>,</span>
-        <span>Wenqian Zhang<sup>1</sup>,</span>
-        <span>Tianze Xu<sup>5</sup>,</span>
-        <span>Zehao Wang<sup>3</sup>,</span>
-        <span>Yuping Wang<sup>4</sup>,</span>
-        <span>Junge Zhang<sup>3</sup>,</span>
-        <span>Jiachen Li<sup>1,3,‡</sup></span>
+          <span>Zhixu Li<sup>1,*,†</sup>,</span>
+          <span>Keqian Tang<sup>1,*</sup>,</span>
+          <span>Litian Gong<sup>1,*</sup>,</span>
+          <span>Jingyu Yao<sup>2</sup>,</span>
+          <span>Wenqian Zhang<sup>1</sup>,</span>
+          <span>Tianze Xu<sup>5</sup>,</span>
+          <span>Zehao Wang<sup>3</sup>,</span>
+          <span>Yuping Wang<sup>4</sup>,</span>
+          <span>Junge Zhang<sup>3</sup>,</span>
+          <span>Jiachen Li<sup>1,3,‡</sup></span>
       </p>
       <p class="affil"><span><sup>1</sup>University of California, Riverside</span> <span><sup>2</sup>Yale University</span> <span><sup>3</sup>Georgia Institute of Technology</span> <span><sup>4</sup>University of Michigan</span> <span><sup>5</sup>University of Toronto</span></p>
-      <p class="affil notes"><span><sup>*</sup>Equal contribution</span> <span><sup>†</sup>Project Lead</span> <span><sup>‡</sup>Corresponding Author</span></p>
+      <p class="affil"><span><sup>*</sup>Equal contribution</span> <span><sup>†</sup>Project Lead</span> <span><sup>‡</sup>Corresponding Author</span></p>
     </div>
 
-    <div class="cta">
-      <a class="btn primary" data-link="paper">
-        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5.5L9.5 0H4zm5 1.5L13.5 6H9V1.5zM4.5 8h7v1.2h-7V8zm0 2.8h7V12h-7v-1.2z"/></svg>
-        Paper</a>
-      <a class="btn" data-link="code">
-        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-        Code</a>
-      <a class="btn" data-link="dataset">
-        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 1C4.1 1 1 2.3 1 4v8c0 1.7 3.1 3 7 3s7-1.3 7-3V4c0-1.7-3.1-3-7-3zm0 1.5c3.3 0 5.5 1 5.5 1.5S11.3 5.5 8 5.5 2.5 4.5 2.5 4 4.7 2.5 8 2.5zM2.5 5.9C3.9 6.6 5.8 7 8 7s4.1-.4 5.5-1.1V8c0 .5-2.2 1.5-5.5 1.5S2.5 8.5 2.5 8V5.9zm0 4C3.9 10.6 5.8 11 8 11s4.1-.4 5.5-1.1V12c0 .5-2.2 1.5-5.5 1.5S2.5 12.5 2.5 12V9.9z"/></svg>
-        Dataset</a>
-      <a class="btn ghost" href="#citation">Cite</a>
+    <div class="actions">
+      <a class="btn" data-link="paper">Paper</a>
+      <a class="btn" data-link="code">Code</a>
+      <a class="btn" data-link="dataset">Dataset</a>
+      <a class="btn" href="#citation">Cite</a>
     </div>
 
-    <div class="metrics-row">
-      <div class="hm"><b>312</b><span>tasks across<br>5 task suites</span></div>
-      <div class="hm"><b>3</b><span>preference levels<br>motion · skill · profile</span></div>
-      <div class="hm"><b>55</b><span>preference instances<br>37 single + 18 multi</span></div>
-      <div class="hm"><b>40.8K</b><span>demonstrations<br>with and without preference</span></div>
-      <div class="hm"><b>2</b><span>metrics: task success<br>+ preference satisfaction</span></div>
-      <div class="hm"><b>6</b><span>VLA policies<br>evaluated</span></div>
-    </div>
+    <dl class="facts">
+      <div><dt>Tasks</dt><dd>312 <span>in five suites</span></dd></div>
+      <div><dt>Preferences</dt><dd>37 <span>single, 18 paired</span></dd></div>
+      <div><dt>Demonstrations</dt><dd>40.8K <span>with and without preference</span></dd></div>
+      <div><dt>Policies</dt><dd>6 <span>VLA models evaluated</span></dd></div>
+    </dl>
   </div>
-  <div class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6l5 5 5-5"/></svg></div>
+  <div class="lanes" id="lanes" aria-label="Demonstrations from the three preference levels. Select one to open that preference."></div>
 </section>
 
-<!-- ================= 01 ABSTRACT ================= -->
-<section class="band" id="overview">
-  <div class="wrap">
-    <div class="eyebrow"><span class="no">01</span><span class="label">Abstract</span><span class="rule"></span></div>
-    <h2>From <i>“Can the robot do the task?”</i> to <i>“Can it do the task my way?”</i></h2>
+<!-- ================= preferences: the 37 single preferences in three lanes, one player ================= -->
+<section class="sec" id="preferences">
+  <header class="sec-head">
+    <h2>Three preference levels, 37 preferences</h2>
+    <p class="lede">A preference is not a separate goal. It is a conditioning signal that biases how the task is carried out, and it is defined by the part of execution it constrains: the motion, the skill, or the subtask-level choice. Pick any preference to watch the same task with and without it, scored by that preference's own metric.</p>
+  </header>
 
-    <div class="card abstract reveal">
-      <p>Personalization is essential for general-purpose robots to transition into household environments and achieve true practicality. While general robotic manipulation has been extensively studied, personalized robotic manipulation (PeRM) lacks a controlled benchmark for separating task completion from preference satisfaction. We introduce <b>LIBERO-PeRM</b>, a benchmark for preference learning in embodied agents. LIBERO-PeRM studies five questions: 1) how policies follow preferences in zero-shot settings; 2) how they learn single preferences from demonstrations; 3) how efficiently they acquire preferences as demonstrations increase; 4) how learned preferences generalize across layouts and tasks; and 5) how policies compose preferences and behave under conflicts. We propose a controlled formulation and taxonomy of observable preferences in simulation, covering motion, skill, and user-profile choices. This formulation is restricted to language-expressible preferences that can be instantiated in LIBERO without changing the task goal, evaluated automatically, and reused across tasks. Building on LIBERO, our procedural pipeline generates paired demonstrations with and without preferences. We create five task suites (312 tasks) with high-quality demonstrations, rich metadata, and preference-satisfaction metrics. Experiments show that current VLA policies struggle with zero-shot personalization, while SFT makes preferences learnable. Mixed training achieves better no-preference retention than sequential adaptation and improves performance with contextual prompts compared with preference-only training, but can weaken motion-preference learning; preference generalization, decomposition, and conflict handling remain difficult.</p>
-    </div>
+  <div class="board" id="board">
+    <div class="board-lanes" id="boardLanes"></div>
+    <div class="player" id="prefPlayer"></div>
+  </div>
 
-    <figure class="card fig reveal">
-      <img src="assets/figures/overview.png" alt="LIBERO-PeRM overview: five task suites on top, five research topics below" loading="eager">
-      <figcaption><b>Five task suites, five research topics.</b> Top: the procedurally generated suites, with pipeline-generated and human-reviewed demonstrations. Bottom: the questions they are built to answer, from zero-shot personalization to composition and conflict.</figcaption>
-    </figure>
+  <div class="aside-note">
+    <h3>What the policy sees</h3>
+    <p>Task and preference language are concatenated into one prompt, and the policy acts from two camera views. Every suite keeps this interface, so a model trained on one can be evaluated on the others.</p>
+    <p class="formula">prompt = “Task: {task_language}. Preference: {preference_language}.”</p>
+    <p class="formula">π<sub>θ</sub>( a<sub>t</sub> | I<sub>t</sub><sup>agent</sup>, I<sub>t</sub><sup>hand</sup>, ℓ<sub>task</sub> ∥ ℓ<sub>pref</sub> )</p>
   </div>
 </section>
 
-<!-- ================= 02 PREFERENCES ================= -->
-<section class="band alt" id="preferences">
-  <div class="wrap wide">
-    <div class="eyebrow"><span class="no">02</span><span class="label">Preference formulation</span><span class="rule"></span></div>
-    <h2>Three preference levels, 37 single preferences</h2>
-    <p class="lede">A preference is not a separate goal. It is a conditioning signal that biases <b>how</b> the task is carried out, and it is defined by the part of execution it constrains: the <b>motion</b>, the <b>skill</b>, or the <b>subtask-level choice</b>. Pick a level and a preference below. Each one comes with two layouts, shown with and without the preference and scored by its own metric.</p>
-
-    <div id="prefWidget">
-      <div class="tabs" role="tablist" aria-label="Preference levels">
-        <button class="tab on" role="tab" data-tier="motion" style="--c:var(--motion)"><span class="t-id">Motion</span><span class="t-name">How the trajectory moves</span><span class="t-sub" data-count="motion"></span></button>
-        <button class="tab" role="tab" data-tier="skill" style="--c:var(--skill)"><span class="t-id">Skill</span><span class="t-name">How a skill is executed</span><span class="t-sub" data-count="skill"></span></button>
-        <button class="tab" role="tab" data-tier="profile" style="--c:var(--profile)"><span class="t-id">User profile</span><span class="t-name">Which object or target is chosen</span><span class="t-sub" data-count="profile"></span></button>
-      </div>
-
-      <div class="card on-alt stage" id="prefStage" style="--c:var(--motion)">
-        <div class="media" data-video id="prefMedia">
-          <video id="prefVideo" muted loop playsinline preload="metadata"></video>
-          <span class="hint">Hover or click to play</span>
-          <span class="play">▶</span>
-        </div>
-        <div class="stage-info">
-          <span class="pill" id="prefPill"></span>
-          <h3 id="prefTitle"></h3>
-          <p class="task" id="prefTask"></p>
-          <p class="how" id="prefHow"></p>
-          <div class="scores" id="prefScores"></div>
-          <div class="demo-switch" id="prefSwitch" role="group" aria-label="Layout"></div>
-          <div class="chips-title" id="prefChipsTitle"></div>
-          <div class="chips" id="prefChips"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout reveal">
-      <h3>What the policy sees</h3>
-      <p>Task and preference language are concatenated into one prompt, and the policy acts from two camera views. Every suite keeps this interface, so a model trained on one can be evaluated on the others.</p>
-      <div class="formula">prompt = “Task: {task_language}. Preference: {preference_language}.”</div>
-      <div class="formula">π<sub>θ</sub>( a<sub>t</sub> | I<sub>t</sub><sup>agent</sup>, I<sub>t</sub><sup>hand</sup>, ℓ<sub>task</sub> ∥ ℓ<sub>pref</sub> )</div>
-    </div>
+<!-- ================= abstract ================= -->
+<section class="sec" id="abstract">
+  <header class="sec-head"><h2>Abstract</h2></header>
+  <div class="prose">
+    <p>Personalization is essential for general-purpose robots to transition into household environments and achieve true practicality. While general robotic manipulation has been extensively studied, personalized robotic manipulation (PeRM) lacks a controlled benchmark for separating task completion from preference satisfaction. We introduce <b>LIBERO-PeRM</b>, a benchmark for preference learning in embodied agents. LIBERO-PeRM studies five questions: 1) how policies follow preferences in zero-shot settings; 2) how they learn single preferences from demonstrations; 3) how efficiently they acquire preferences as demonstrations increase; 4) how learned preferences generalize across layouts and tasks; and 5) how policies compose preferences and behave under conflicts. We propose a controlled formulation and taxonomy of observable preferences in simulation, covering motion, skill, and user-profile choices. This formulation is restricted to language-expressible preferences that can be instantiated in LIBERO without changing the task goal, evaluated automatically, and reused across tasks. Building on LIBERO, our procedural pipeline generates paired demonstrations with and without preferences. We create five task suites (312 tasks) with high-quality demonstrations, rich metadata, and preference-satisfaction metrics. Experiments show that current VLA policies struggle with zero-shot personalization, while SFT makes preferences learnable. Mixed training achieves better no-preference retention than sequential adaptation and improves performance with contextual prompts compared with preference-only training, but can weaken motion-preference learning; preference generalization, decomposition, and conflict handling remain difficult.</p>
   </div>
+  <figure class="fig">
+    <img src="assets/figures/overview.png" alt="LIBERO-PeRM overview: five task suites on top, five research topics below" loading="lazy" width="1673" height="908">
+    <figcaption>Top: the five procedurally generated suites, with pipeline-generated and human-reviewed demonstrations. Bottom: the questions they are built to answer, from zero-shot personalization to composition and conflict.</figcaption>
+  </figure>
 </section>
 
-<!-- ================= 03 PIPELINE ================= -->
-<section class="band" id="pipeline">
-  <div class="wrap wide">
-    <div class="eyebrow"><span class="no">03</span><span class="label">Benchmark construction</span><span class="rule"></span></div>
-    <h2>A procedural pipeline that treats preferences as controllable variables</h2>
-    <p class="lede">Starting from a LIBERO layout, a task and a preference, the pipeline produces a preference-ready scene, <b>paired demonstrations with and without the preference</b>, subtask metadata, and the metric that scores the preference.</p>
-
-    <div class="grid3">
-      <div class="cell reveal">
-        <div class="over">Stage 1</div>
-        <h3>Preference selection and layout modification</h3>
-        <p>A VLM makes the smallest edit that lets the preference be acted on. Motion and skill preferences leave the layout and task language untouched, and the VLM only picks the target, such as the object to avoid. A user profile adds what it needs, for example a red twin of an object, and the task language is abstracted so one sentence covers both behaviours.</p>
-        <div class="chips"><span class="chip">LIBERO layouts</span><span class="chip">VLM grounding</span></div>
-        <span class="arrow" aria-hidden="true">→</span>
-      </div>
-      <div class="cell reveal">
-        <div class="over">Stage 2</div>
-        <h3>Preference-conditioned generation</h3>
-        <p>A VLM writes a no-preference plan and a preference-conditioned plan. A library of heuristic skills, each built from one human demonstration plus an OMPL planner over randomized initial states, turns the plans into trajectories. A user profile changes the plan, a skill preference changes which skill is called, and a motion preference changes the skill's parameters.</p>
-        <div class="chips"><span class="chip">paired demonstrations</span><span class="chip">OMPL + smoothing</span><span class="chip">72%+ skills need no offset tuning</span></div>
-        <span class="arrow" aria-hidden="true">→</span>
-      </div>
-      <div class="cell reveal">
-        <div class="over">Stage 3</div>
-        <h3>Satisfaction metric generation</h3>
-        <p>Each preference gets an explicit metric. Motion preferences are scored from trajectory quantities, skill preferences at key waypoints, and user profiles from the executed subtask plan. Scores map to a four-level label so that all three levels report on the same scale.</p>
-        <div class="chips"><span class="chip">satisfaction score</span><span class="chip">d ∈ {0, ¼, ¾, 1}</span></div>
-      </div>
-    </div>
-
-    <figure class="card fig reveal">
-      <img src="assets/figures/pipeline.png" alt="Data generation pipeline: preference selection and layout modification, preference-conditioned generation, satisfaction metric generation" loading="lazy">
-      <figcaption><b>Data generation pipeline.</b> Inputs on the left, the three stages in the middle, and what each stage adds to the released data along the bottom.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ================= 04 SUITES ================= -->
-<section class="band alt" id="suites">
-  <div class="wrap wide">
-    <div class="eyebrow"><span class="no">04</span><span class="label">Task suites</span><span class="rule"></span></div>
+<!-- ================= suites ================= -->
+<section class="sec" id="suites">
+  <header class="sec-head">
     <h2>Five suites, each isolating one capability</h2>
-    <p class="lede">Together the suites hold <b>312 tasks</b> with more than 100 trajectories per task on average and <b>40.8K</b> rollout episodes. A task is one layout, one task instruction and one preference prompt.</p>
+    <p class="lede">Together the suites hold 312 tasks with more than 100 trajectories per task on average and 40.8K rollout episodes. A task is one layout, one task instruction and one preference prompt. The strip below is drawn to scale. Select a suite to open its tasks.</p>
+  </header>
 
-    <div class="grid5">
-      <div class="cell suite reveal"><div class="count">100<small>tasks</small></div><h3>LIBERO-SinglePref</h3><p>Single-preference learning and execution. The foundation for every other suite.</p></div>
-      <div class="cell suite reveal"><div class="count">100<small>tasks</small></div><h3>LIBERO-PrefScale</h3><p>How preference learning scales with demonstrations, tasks and layouts, with no-preference data, unseen layouts and different tasks for generalization.</p></div>
-      <div class="cell suite reveal"><div class="count">48<small>tasks</small></div><h3>LIBERO-PrefConflict</h3><p>Two preferences that cannot both hold on the same layout and task, and preferences that argue against the task itself.</p></div>
-      <div class="cell suite reveal"><div class="count">64<small>tasks</small></div><h3>LIBERO-PrefCompose</h3><p>Four aligned conditions per layout and task: no preference, P<sub>A</sub>, P<sub>B</sub>, and P<sub>A</sub> + P<sub>B</sub>.</p></div>
-      <div class="cell suite reveal"><div class="count">reuse</div><h3>LIBERO-ComprePref</h3><p>Rewritten prompts over tasks from the other suites: explicit task–preference mixtures and implicit cues that imply the preference without naming it.</p></div>
-    </div>
-
-    <figure class="card on-alt fig reveal">
-      <img src="assets/figures/statistics.png" alt="Dataset statistics: tasks by suite, tasks by preference type, preference instances by type, trajectory length, number of skills" loading="lazy">
-      <figcaption><b>Dataset statistics.</b> (a) Tasks by suite. (b) Tasks by preference type, including the no-preference tasks generated for comparison. (c) Preference instances by type. (d) Trajectory length. (e) Number of skills per task.</figcaption>
-    </figure>
-
-    <div class="res-grid reveal">
-      <a class="card on-alt res" data-link="dataset"><span class="r-name">Demonstrations</span><span class="r-desc">Per-task HDF5 files with third-person and wrist views, full simulator states, subtask metadata and per-step preference signals.</span><span class="r-host">Hugging Face</span></a>
-      <a class="card on-alt res" data-link="dataset"><span class="r-name">Task definitions</span><span class="r-desc">BDDL scenes and mission files: instructions, no-preference and preference plans, metric parameters and calibration.</span><span class="r-host">Hugging Face · GitHub</span></a>
-      <a class="card on-alt res" data-link="code"><span class="r-name">Generation and evaluation code</span><span class="r-desc">The procedural pipeline, the preference metrics, policy servers and the rollout client.</span><span class="r-host">GitHub</span></a>
-      <a class="card on-alt res" data-link="code"><span class="r-name">Reproduction scripts</span><span class="r-desc">One script per table and figure of the paper, from fine-tuning to evaluation.</span><span class="r-host">GitHub</span></a>
-    </div>
+  <div class="strip" id="suiteStrip">
+    <button type="button" class="strip-seg" style="--n:100" data-suite="single"><span class="s-n">100</span><span class="s-name">LIBERO-SinglePref</span><span class="s-d">Single-preference learning and execution. The foundation for every other suite.</span></button>
+    <button type="button" class="strip-seg" style="--n:100" data-suite="scale"><span class="s-n">100</span><span class="s-name">LIBERO-PrefScale</span><span class="s-d">How preference learning scales with demonstrations, tasks and layouts, with no-preference data, unseen layouts and different tasks.</span></button>
+    <button type="button" class="strip-seg" style="--n:48" data-suite="conflict"><span class="s-n">48</span><span class="s-name">LIBERO-PrefConflict</span><span class="s-d">Two preferences that cannot both hold, and preferences that argue against the task.</span></button>
+    <button type="button" class="strip-seg" style="--n:64" data-suite="compose"><span class="s-n">64</span><span class="s-name">LIBERO-PrefCompose</span><span class="s-d">Four aligned conditions per layout: no preference, P<sub>A</sub>, P<sub>B</sub>, and P<sub>A</sub> + P<sub>B</sub>.</span></button>
   </div>
+  <p class="strip-reuse"><b>LIBERO-ComprePref</b> adds no new tasks. It rewrites the prompts of tasks from the other four suites: explicit task–preference mixtures, and implicit cues that imply the preference without naming it.</p>
+
+  <figure class="fig">
+    <img src="assets/figures/statistics.png" alt="Dataset statistics: tasks by suite, tasks by preference type, preference instances by type, trajectory length, number of skills" loading="lazy" width="1659" height="433">
+    <figcaption>(a) Tasks by suite. (b) Tasks by preference type, including the no-preference tasks generated for comparison. (c) Preference instances by type. (d) Trajectory length. (e) Number of skills per task.</figcaption>
+  </figure>
+
+  <h3 class="sub">What is released</h3>
+  <ul class="release">
+    <li><a data-link="dataset">Demonstrations</a><span>Per-task HDF5 files with third-person and wrist views, full simulator states, subtask metadata and per-step preference signals.</span></li>
+    <li><a data-link="dataset">Task definitions</a><span>BDDL scenes and mission files: instructions, no-preference and preference plans, metric parameters and calibration.</span></li>
+    <li><a data-link="code">Generation and evaluation code</a><span>The procedural pipeline, the preference metrics, policy servers and the rollout client.</span></li>
+    <li><a data-link="code">Reproduction scripts</a><span>One script per table and figure of the paper, from fine-tuning to evaluation.</span></li>
+  </ul>
 </section>
 
-<!-- ================= 05 TASKS ================= -->
-<section class="band" id="tasks">
-  <div class="wrap wide">
-    <div class="eyebrow"><span class="no">05</span><span class="label">Task explorer</span><span class="rule"></span></div>
+<!-- ================= task explorer ================= -->
+<section class="sec" id="tasks">
+  <header class="sec-head">
     <h2>Every task, with its preference-satisfaction curve</h2>
-    <p class="lede">Each clip replays the demonstrations for one task and re-evaluates the task's preference metric on the trace so far, so <b>the end of a curve is the episode score</b>. With two rollouts, solid lines follow the top one and dashed lines the bottom one. Conflict and composition tasks plot both preferences.</p>
+    <p class="lede">Each clip replays the demonstrations for one task and re-evaluates the task's preference metric on the trace so far, so the end of a curve is the episode score. With two rollouts, solid lines follow the top one and dashed lines the bottom one. Conflict and composition tasks plot both preferences.</p>
+  </header>
 
-    <div class="filters" id="taskFilters" role="group" aria-label="Filter tasks by suite"></div>
-    <p class="filter-note" id="taskNote"></p>
-    <div class="task-grid" id="taskGrid"></div>
-    <div class="more"><button class="btn" id="taskMore" type="button">Show more</button></div>
+  <div class="explorer" id="explorer">
+    <div class="ex-bar">
+      <div class="seg" id="exSuites" role="group" aria-label="Suite"></div>
+      <label class="ex-search"><span class="sr">Filter tasks by preference or task</span><input type="search" id="exSearch" placeholder="Filter by preference or task" autocomplete="off"></label>
+      <span class="ex-count" id="exCount" aria-live="polite"></span>
+    </div>
+    <p class="ex-note" id="exNote"></p>
+    <div class="ex-body">
+      <div class="ex-list" id="exList" aria-label="Tasks"></div>
+      <div class="player" id="taskPlayer"></div>
+    </div>
   </div>
 </section>
 
-<!-- ================= 06 METRICS ================= -->
-<section class="band alt" id="metrics">
-  <div class="wrap wide">
-    <div class="eyebrow"><span class="no">06</span><span class="label">Evaluation protocol</span><span class="rule"></span></div>
+<!-- ================= pipeline ================= -->
+<section class="sec" id="pipeline">
+  <header class="sec-head">
+    <h2>A procedural pipeline that treats preferences as controllable variables</h2>
+    <p class="lede">Starting from a LIBERO layout, a task and a preference, the pipeline produces a preference-ready scene, paired demonstrations with and without the preference, subtask metadata, and the metric that scores the preference.</p>
+  </header>
+  <figure class="fig">
+    <img src="assets/figures/pipeline.png" alt="Data generation pipeline: preference selection and layout modification, preference-conditioned generation, satisfaction metric generation" loading="lazy" width="1673" height="724">
+    <figcaption>Inputs on the left, the three stages in the middle, and what each stage adds to the released data along the bottom.</figcaption>
+  </figure>
+  <ol class="steps">
+    <li>
+      <h3>Preference selection and layout modification</h3>
+      <p>A VLM makes the smallest edit that lets the preference be acted on. Motion and skill preferences leave the layout and task language untouched, and the VLM only picks the target, such as the object to avoid. A user profile adds what it needs, for example a red twin of an object, and the task language is abstracted so one sentence covers both behaviours.</p>
+    </li>
+    <li>
+      <h3>Preference-conditioned generation</h3>
+      <p>A VLM writes a no-preference plan and a preference-conditioned plan. A library of heuristic skills, each built from one human demonstration plus an OMPL planner over randomized initial states, turns the plans into trajectories. A user profile changes the plan, a skill preference changes which skill is called, and a motion preference changes the skill's parameters. More than 72% of skills need no offset tuning on any task.</p>
+    </li>
+    <li>
+      <h3>Satisfaction metric generation</h3>
+      <p>Each preference gets an explicit metric. Motion preferences are scored from trajectory quantities, skill preferences at key waypoints, and user profiles from the executed subtask plan. Scores map to a four-level label d ∈ {0, ¼, ¾, 1} so that all three levels report on the same scale.</p>
+    </li>
+  </ol>
+</section>
+
+<!-- ================= metrics ================= -->
+<section class="sec" id="metrics">
+  <header class="sec-head">
     <h2>Task success and preference satisfaction, reported separately</h2>
     <p class="lede">A policy can finish the task while ignoring the preference. Two metrics keep those apart, and preference satisfaction only counts on episodes where the task succeeds.</p>
-
-    <div class="grid3">
-      <div class="cell metric reveal">
-        <div class="name"><span class="abbr">SR</span><span class="full">Task success rate</span></div>
-        <div class="formula">SR = (1/N) Σ<sub>n</sub> 𝟙[ G(τ<sub>n</sub>) ]</div>
-        <p>Whether the task goal is reached, with or without a preference in the prompt.</p>
-      </div>
-      <div class="cell metric reveal">
-        <div class="name"><span class="abbr">SA</span><span class="full">Preference satisfaction</span></div>
-        <div class="formula">SA = (1/N) Σ<sub>n</sub> 𝟙[ G(τ<sub>n</sub>) ] · d<sub>n</sub></div>
-        <p>Each episode gets a discrete satisfaction label d<sub>n</sub> ∈ {0, ¼, ¾, 1}. A failed episode contributes zero.</p>
-      </div>
-      <div class="cell metric reveal">
-        <div class="name"><span class="abbr">Gen.</span><span class="full">Three generalization settings</span></div>
-        <div class="formula">in-domain → task / layout → preference-level</div>
-        <p>In-domain keeps tasks, preferences and layouts with small object-position changes. Task-or-layout changes one of them. Preference-level changes the task under an unseen layout.</p>
-      </div>
+  </header>
+  <div class="defs">
+    <div class="def">
+      <h3>SR, task success rate</h3>
+      <p class="formula">SR = (1/N) Σ<sub>n</sub> 𝟙[ G(τ<sub>n</sub>) ]</p>
+      <p>Whether the task goal is reached, with or without a preference in the prompt.</p>
     </div>
-
-    <div class="grid3" style="margin-top:16px">
-      <div class="cell level reveal" style="--c:var(--motion)"><div class="over">Motion</div><h3>Scored from the trajectory</h3><p>Physical quantities of the path: time per subtask, end-effector acceleration, height during lateral moves, straightness of the carry segment, clearance from a named object, rotation while moving.</p></div>
-      <div class="cell level reveal" style="--c:var(--skill)"><div class="over">Skill</div><h3>Scored at the skill's key moment</h3><p>The pose at the grasp or at the release: where the gripper sits relative to the object, its approach angle, how the object is set down or let go, whether it was lifted at all.</p></div>
-      <div class="cell level reveal" style="--c:var(--profile)"><div class="over">User profile</div><h3>Scored from the executed subtask</h3><p>Which candidate the policy commits to: the object it picks up first, or the target it places the object at, checked against what the profile implies.</p></div>
+    <div class="def">
+      <h3>SA, preference satisfaction</h3>
+      <p class="formula">SA = (1/N) Σ<sub>n</sub> 𝟙[ G(τ<sub>n</sub>) ] · d<sub>n</sub></p>
+      <p>Each episode gets a discrete satisfaction label d<sub>n</sub> ∈ {0, ¼, ¾, 1}. A failed episode contributes zero.</p>
+    </div>
+    <div class="def">
+      <h3>Three generalization settings</h3>
+      <p class="formula">in-domain, task or layout, preference-level</p>
+      <p>In-domain keeps tasks, preferences and layouts with small object-position changes. Task-or-layout changes one of them. Preference-level changes the task under an unseen layout.</p>
     </div>
   </div>
+  <h3 class="sub">What each level's metric looks at</h3>
+  <table class="levels">
+    <tbody>
+      <tr class="lv-motion"><th><span class="lvl">Motion</span></th><td><b>The trajectory.</b> Physical quantities of the path: time per subtask, end-effector acceleration, height during lateral moves, straightness of the carry segment, clearance from a named object, rotation while moving.</td></tr>
+      <tr class="lv-skill"><th><span class="lvl">Skill</span></th><td><b>The skill's key moment.</b> The pose at the grasp or at the release: where the gripper sits relative to the object, its approach angle, how the object is set down or let go, whether it was lifted at all.</td></tr>
+      <tr class="lv-profile"><th><span class="lvl">User profile</span></th><td><b>The executed subtask.</b> Which candidate the policy commits to: the object it picks up first, or the target it places the object at, checked against what the profile implies.</td></tr>
+    </tbody>
+  </table>
 </section>
 
-<!-- ================= 07 RESULTS ================= -->
-<section class="band" id="results">
-  <div class="wrap wide">
-    <div class="eyebrow"><span class="no">07</span><span class="label">Experiments</span><span class="rule"></span></div>
+<!-- ================= results ================= -->
+<section class="sec" id="results">
+  <header class="sec-head">
     <h2>Five questions, five findings</h2>
-    <p class="lede">Six VLA policies are evaluated zero-shot: <b>OpenVLA-OFT</b>, <b>π<sub>0</sub>-fast</b>, <b>π<sub>0.5</sub></b>, <b>GR00T-N1.6</b>, <b>SmolVLA</b> and <b>UniVLA</b>. Fine-tuning experiments start from π<sub>0.5</sub>, the strongest zero-shot baseline.</p>
+    <p class="lede">Six VLA policies are evaluated zero-shot: OpenVLA-OFT, π<sub>0</sub>-fast, π<sub>0.5</sub>, GR00T-N1.6, SmolVLA and UniVLA. Fine-tuning experiments start from π<sub>0.5</sub>, the strongest zero-shot baseline.</p>
+  </header>
 
-    <div class="findings">
-      <div class="finding full reveal">
-        <div class="finding-head"><span class="q">Q1</span><h3>Zero-shot: policies finish the task and ignore the preference</h3></div>
-        <p>Minimal layout edits keep no-preference success high, with π<sub>0.5</sub> at <b>97.6%</b>, so low satisfaction reflects preference following rather than a harder scene. On motion and skill preferences π<sub>0.5</sub> succeeds <b>97.5%</b> and <b>100%</b> of the time but satisfies the preference only <b>24.4%</b> and <b>25.0%</b>. A user profile changes the target itself and drops π<sub>0.5</sub> to <b>19.1%</b> success.</p>
-        <div class="table-wrap">
-          <p class="t-cap">Zero-shot results on LIBERO-SinglePref. SR and SA in %; No-Pref reports SR only.</p>
-          <table class="data">
+  <article class="q">
+    <div class="q-side"><span class="q-tag">Q1</span><span class="q-name">Zero-shot personalization</span></div>
+    <div class="q-main">
+      <h3>Policies finish the task and ignore the preference</h3>
+      <p>Minimal layout edits keep no-preference success high, with π<sub>0.5</sub> at <b>97.6%</b>, so low satisfaction reflects preference following rather than a harder scene. On motion and skill preferences π<sub>0.5</sub> succeeds <b>97.5%</b> and <b>100%</b> of the time but satisfies the preference only <b>24.4%</b> and <b>25.0%</b>. A user profile changes the target itself and drops π<sub>0.5</sub> to <b>19.1%</b> success.</p>
+      <div class="table-wrap">
+        <p class="t-cap">Zero-shot results on LIBERO-SinglePref. SR and SA in %. No-Pref reports SR only.</p>
+        <table class="data">
             <thead>
               <tr class="grp"><th></th><th>No-Pref</th><th colspan="2">All-Pref</th><th colspan="2">Motion</th><th colspan="2">Skill</th><th colspan="2">User profile</th></tr>
               <tr><th>Method</th><th>SR</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th></tr>
@@ -305,15 +256,20 @@
               <tr><td>UniVLA</td><td>80.8</td><td>45.83</td><td>21.52</td><td>90.00</td><td>10.17</td><td>71.79</td><td>3.59</td><td>0.00</td><td>0.00</td></tr>
             </tbody>
           </table>
-        </div>
       </div>
+    </div>
+  </article>
 
-      <div class="finding full reveal">
-        <div class="finding-head"><span class="q">Q2</span><h3>Fine-tuning makes preferences learnable, and mixed training is a trade-off</h3></div>
-        <p>LoRA fine-tuning on LIBERO-SinglePref lifts all-preference SR/SA to <b>85.0 / 82.5</b>. Fine-tuning on LIBERO first and preferences second costs no-preference success, which falls to <b>52.3%</b>. Mixing both in one run keeps it at <b>91.0%</b> and holds up under rewritten prompts: <b>72.8 / 70.1</b> on LIBERO-ComprePref against <b>44.0 / 42.6</b> for preference-only training. The price is paid on motion preferences, where success drops from <b>90.0%</b> to <b>66.9%</b>, so mixing is not uniformly better.</p>
-        <div class="table-wrap">
-          <p class="t-cap">Fine-tuned results, all from the π<sub>0.5</sub> base checkpoint. Mean ± standard deviation over 10 evaluation runs with fixed checkpoints. * is the same task and preference under an unseen layout.</p>
-          <table class="data">
+  <article class="q">
+    <div class="q-side"><span class="q-tag">Q2</span><span class="q-name">Learning ability</span></div>
+    <div class="q-main">
+      <h3>Fine-tuning makes preferences learnable, and mixed training is a trade-off</h3>
+      <p>LoRA fine-tuning on LIBERO-SinglePref lifts all-preference SR/SA to <b>85.0 / 82.5</b>. Fine-tuning on LIBERO first and preferences second costs no-preference success, which falls to <b>52.3%</b>. Mixing both in one run keeps it at <b>91.0%</b> and holds up under rewritten prompts: <b>72.8 / 70.1</b> on LIBERO-ComprePref against <b>44.0 / 42.6</b> for preference-only training. The price is paid on motion preferences, where success drops from <b>90.0%</b> to <b>66.9%</b>, so mixing is not uniformly better.</p>
+
+    </div>
+    <div class="table-wrap wide">
+        <p class="t-cap">Fine-tuned results, all from the π<sub>0.5</sub> base checkpoint. Mean ± standard deviation over 10 evaluation runs with fixed checkpoints. * is the same task and preference under an unseen layout.</p>
+        <table class="data">
             <thead>
               <tr class="grp"><th></th><th>No-Pref</th><th colspan="2">All-Pref</th><th colspan="2">Motion</th><th colspan="2">Skill</th><th colspan="2">User profile</th><th colspan="2">ComprePref</th></tr>
               <tr><th>Method</th><th>SR</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th></tr>
@@ -325,37 +281,37 @@
               <tr><td>π<sub>0.5</sub>-LoRA*</td><td>–</td><td>37.49<small>±3.27</small></td><td>28.36<small>±2.55</small></td><td>55.00<small>±7.53</small></td><td>43.43<small>±7.02</small></td><td>28.57<small>±3.79</small></td><td>26.94<small>±3.57</small></td><td>34.00<small>±5.60</small></td><td>20.58<small>±3.39</small></td><td>–</td><td>–</td></tr>
             </tbody>
           </table>
-        </div>
       </div>
+  </article>
 
-      <div class="finding full reveal">
-        <div class="finding-head"><span class="q">Q3–4</span><h3>Layout diversity helps more than extra demonstrations, and generalization stays hard</h3></div>
-        <p>In-domain SR and SA track each other at every data scale: when the task succeeds, the preference is usually satisfied too. At a fixed budget of 2.25K demonstrations, spreading them over more layouts (L1 → L3) helps more than adding demonstrations per layout, and adding matched no-preference missions (L4) helps again without any new layout. Unseen layouts improve with scale. Unseen layouts with a different task do not.</p>
-        <figure class="card fig" style="margin:14px 0 0">
-          <img src="assets/figures/scaling.png" alt="Task success and preference satisfaction against training data scale, for in-domain, unseen-layout, and unseen-layout-with-different-task evaluation" loading="lazy">
-          <figcaption><b>Scaling on LIBERO-PrefScale.</b> In-domain (blue), unseen layout (red), unseen layout with a different task (green). Dashed branches compare L1 (★, fewer layouts, denser), L3 (△, more layouts) and L4 (◇, matched no-preference missions) at 2.25K.</figcaption>
-        </figure>
-      </div>
-
-      <div class="finding reveal">
-        <div class="finding-head"><span class="q">Q5</span><h3>Composition is partly learnable, decomposition is not</h3></div>
-        <p>Trained on P<sub>A</sub> and P<sub>B</sub> separately, the policy composes P<sub>A</sub> + P<sub>B</sub> with <b>25.0%</b> SR and SA. Asked to recover P<sub>B</sub> after training on P<sub>A</sub> + P<sub>B</sub> and P<sub>A</sub>, it reaches <b>37.5%</b> SR and <b>0.0%</b> SA: the task gets done, the target preference does not.</p>
-      </div>
-      <div class="finding reveal">
-        <div class="finding-head"><span class="q">Q5</span><h3>Conflicts degrade execution instead of being resolved</h3></div>
-        <p>Under two conflicting preferences SR/SA fall from <b>73.0 / 63.4</b> to <b>66.0 / 47.8</b>, and neither preference dominates (gap <b>11.3</b>). When the preference argues against the task, following the task (<b>33.3%</b>) and following the preference (<b>29.2%</b>) are about as likely, and <b>37.5%</b> of trials complete neither.</p>
-      </div>
+  <article class="q">
+    <div class="q-side"><span class="q-tag">Q3, Q4</span><span class="q-name">Learning efficiency and generalization</span></div>
+    <div class="q-main">
+      <h3>Layout diversity helps more than extra demonstrations, and generalization stays hard</h3>
+      <p>In-domain SR and SA track each other at every data scale: when the task succeeds, the preference is usually satisfied too. At a fixed budget of 2.25K demonstrations, spreading them over more layouts (L1 to L3) helps more than adding demonstrations per layout, and adding matched no-preference missions (L4) helps again without any new layout. Unseen layouts improve with scale. Unseen layouts with a different task do not.</p>
+      <figure class="fig tight">
+        <img src="assets/figures/scaling.png" alt="Task success and preference satisfaction against training data scale, for in-domain, unseen-layout, and unseen-layout-with-different-task evaluation" loading="lazy" width="1657" height="525">
+        <figcaption>Scaling on LIBERO-PrefScale. In-domain (blue), unseen layout (red), unseen layout with a different task (green). Dashed branches compare L1 (★, fewer layouts, denser), L3 (△, more layouts) and L4 (◇, matched no-preference missions) at 2.25K.</figcaption>
+      </figure>
     </div>
-  </div>
+  </article>
+
+  <article class="q">
+    <div class="q-side"><span class="q-tag">Q5</span><span class="q-name">Composition and conflict</span></div>
+    <div class="q-main">
+      <h3>Composition is partly learnable, decomposition is not</h3>
+      <p>Trained on P<sub>A</sub> and P<sub>B</sub> separately, the policy composes P<sub>A</sub> + P<sub>B</sub> with <b>25.0%</b> SR and SA. Asked to recover P<sub>B</sub> after training on P<sub>A</sub> + P<sub>B</sub> and P<sub>A</sub>, it reaches <b>37.5%</b> SR and <b>0.0%</b> SA: the task gets done, the target preference does not.</p>
+      <h3>Conflicts degrade execution instead of being resolved</h3>
+      <p>Under two conflicting preferences SR/SA fall from <b>73.0 / 63.4</b> to <b>66.0 / 47.8</b>, and neither preference dominates (gap <b>11.3</b>). When the preference argues against the task, following the task (<b>33.3%</b>) and following the preference (<b>29.2%</b>) are about as likely, and <b>37.5%</b> of trials complete neither.</p>
+    </div>
+  </article>
 </section>
 
-<!-- ================= 08 CITATION ================= -->
-<section class="band alt" id="citation">
-  <div class="wrap">
-    <div class="eyebrow"><span class="no">08</span><span class="label">Citation</span><span class="rule"></span></div>
-    <h2>Cite this work</h2>
-    <div class="card bibtex reveal">
-      <button class="copy" id="copyBibtex" type="button">Copy BibTeX</button>
+<!-- ================= citation ================= -->
+<section class="sec" id="citation">
+  <header class="sec-head"><h2>Cite this work</h2></header>
+  <div class="bibtex">
+    <button class="btn dark" id="copyBibtex" type="button">Copy BibTeX</button>
 <pre id="bibtex">@inproceedings{li2026liberoperm,
   title     = {LIBERO-PeRM: Benchmarking Personalized Robotic Manipulation},
   author    = {Li, Zhixu and Tang, Keqian and Gong, Litian and Yao, Jingyu and Zhang, Wenqian and
@@ -364,26 +320,21 @@
                Evaluations and Datasets Track},
   year      = {2026}
 }</pre>
-    </div>
   </div>
 </section>
 
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="legend">
-      <span><i style="background:var(--motion)"></i>Motion preference</span>
-      <span><i style="background:var(--skill)"></i>Skill preference</span>
-      <span><i style="background:var(--profile)"></i>User profile</span>
-      <span><i style="background:var(--multi)"></i>Second preference in a pair</span>
-    </div>
-    <p>LIBERO-PeRM — from <i>“Can the robot do the task?”</i> to <i>“Can it do the task my way?”</i></p>
-    <p>Built on <a href="https://libero-project.github.io/" target="_blank" rel="noopener">LIBERO</a>. Clips are rendered from simulation demonstrations. Page layout modeled on the <a href="https://liulin815.github.io/LIBERO-Recovery/" target="_blank" rel="noopener">LIBERO-Recover</a> project page.</p>
-  </div>
+<footer class="foot">
+  <p>Built on <a href="https://libero-project.github.io/" target="_blank" rel="noopener">LIBERO</a>. Every clip on this page is rendered from simulation demonstrations in the dataset.</p>
 </footer>
 
-<script src="assets/tasks/tasks.js?v=1"></script>
-<script src="js/main.js?v=1" defer></script>
+</main>
+
+<dialog class="lightbox" id="lightbox" aria-label="Enlarged clip">
+  <button class="lightbox-close" type="button" id="lightboxClose">Close</button>
+  <video id="lightboxVideo" controls loop muted playsinline></video>
+</dialog>
+
+<script src="assets/tasks/tasks.js?v=5"></script>
+<script src="js/main.js?v=5" defer></script>
 </body>
 </html>

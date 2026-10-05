@@ -4,10 +4,10 @@ Static site for *LIBERO-PeRM: Benchmarking Personalized Robotic Manipulation* (N
 
 ```
 index.html            page content
-css/style.css         styles
-js/main.js            interactions; set the paper / code / dataset URLs in LINKS at the top
+css/style.css         styles (navy rail and hero, cool paper body; the three level colours match the rendered curves)
+js/main.js            hero lanes, preference board, task explorer, clip player; set the paper / code / dataset URLs in LINKS at the top
 assets/figures/       figures from the paper
-assets/reel/          square clips for the hero video wall
+assets/reel/          square clips for the three hero lanes, one lane per preference level
 assets/tasks/         one clip per task (rollouts + satisfaction curves) and tasks.js, the data the page reads
 ```
 
@@ -22,4 +22,5 @@ python scripts/build_page_assets.py                     # copy clips here and re
 
 Preview locally with a static file server in this directory. The page also opens from `file://`.
 
-Layout modeled on the [LIBERO-Recover](https://liulin815.github.io/LIBERO-Recovery/) project page.
+Two kinds of link open a specific clip: `#pref=<family>` (for example `#pref=2-3`) selects a preference on the board, and
+`#task=<suite>/<task id>` (for example `#task=conflict/pp1_speed_062__joint`) opens a task in the explorer.
