@@ -17,7 +17,7 @@
   <!-- webfont loads async so an unreachable fonts host never blocks first paint -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"></noscript>
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='4' fill='%230071e3'/><circle cx='8' cy='8' r='3.2' fill='white'/></svg>">
 </head>
 <body>
@@ -65,7 +65,20 @@
     <p class="hero-tag">Benchmarking <b>Personalized Robotic Manipulation</b> — can a policy do the task <b>the way you want it done</b>?</p>
 
     <div class="authors">
-      <p class="names"><a href="https://zhixuli-the-runner.github.io/" target="_blank" rel="noopener">Zhixu Li</a>, <span>Keqian Tang</span>, <span>Litian Gong</span>, <span>Jingyu Yao</span>, <span>Wenqian Zhang</span>, <span>Tianze Xu</span>, <span>Zehao Wang</span>, <span>Yuping Wang</span>, <span>Junge Zhang</span>, <span>Jiachen Li</span></p>
+      <p class="names">
+        <span><a href="https://zhixuli-the-runner.github.io/" target="_blank" rel="noopener">Zhixu Li</a><sup>1,*,†</sup>,</span>
+        <span>Keqian Tang<sup>1,*</sup>,</span>
+        <span>Litian Gong<sup>1,*</sup>,</span>
+        <span>Jingyu Yao<sup>2</sup>,</span>
+        <span>Wenqian Zhang<sup>1</sup>,</span>
+        <span>Tianze Xu<sup>5</sup>,</span>
+        <span>Zehao Wang<sup>3</sup>,</span>
+        <span>Yuping Wang<sup>4</sup>,</span>
+        <span>Junge Zhang<sup>3</sup>,</span>
+        <span>Jiachen Li<sup>1,3,‡</sup></span>
+      </p>
+      <p class="affil"><span><sup>1</sup>University of California, Riverside</span> <span><sup>2</sup>Yale University</span> <span><sup>3</sup>Georgia Institute of Technology</span> <span><sup>4</sup>University of Michigan</span> <span><sup>5</sup>University of Toronto</span></p>
+      <p class="affil notes"><span><sup>*</sup>Equal contribution</span> <span><sup>†</sup>Project Lead</span> <span><sup>‡</sup>Corresponding Author</span></p>
     </div>
 
     <div class="cta">
@@ -100,7 +113,7 @@
     <h2>From <i>“Can the robot do the task?”</i> to <i>“Can it do the task my way?”</i></h2>
 
     <div class="card abstract reveal">
-      <p>Personalization is essential for general-purpose robots to transition into household environments and achieve true practicality. While general robotic manipulation has been extensively studied, personalized robotic manipulation (PeRM) lacks a unified formulation and remains significantly underexplored. In this paper, we identify user preference as the cornerstone of PeRM and introduce <b>LIBERO-PeRM</b>, a novel benchmark designed for personalized preference learning in embodied agents. Specifically, LIBERO-PeRM highlights five key research topics in personalization: 1) how policies follow preferences in zero-shot settings; 2) how to learn single preferences from demonstrations; 3) how efficiently policies acquire preferences as demonstrations increase; 4) how learned preferences generalize across layouts and preference settings; and 5) how policies compose multiple preferences and resolve conflicts. To this end, we propose a unified formulation of personalized manipulation with three preference levels that jointly cover common daily personalization scenarios. Building on this formulation and the LIBERO framework, we develop an extensible procedural generation pipeline that generates paired demonstrations with and without preferences. For benchmarking purposes, we create five task suites (312 tasks in total) with corresponding high-quality demonstrations, rich metadata, and preference satisfaction metrics to probe the aforementioned research topics. Experimental results show that current VLA policies struggle with zero-shot personalization, while SFT makes preferences learnable; preference learning benefits from mixed training, broader layout diversity, and same-layout no-preference data, but generalization, decomposition, and conflict resolution remain difficult.</p>
+      <p>Personalization is essential for general-purpose robots to transition into household environments and achieve true practicality. While general robotic manipulation has been extensively studied, personalized robotic manipulation (PeRM) lacks a controlled benchmark for separating task completion from preference satisfaction. We introduce <b>LIBERO-PeRM</b>, a benchmark for preference learning in embodied agents. LIBERO-PeRM studies five questions: 1) how policies follow preferences in zero-shot settings; 2) how they learn single preferences from demonstrations; 3) how efficiently they acquire preferences as demonstrations increase; 4) how learned preferences generalize across layouts and tasks; and 5) how policies compose preferences and behave under conflicts. We propose a controlled formulation and taxonomy of observable preferences in simulation, covering motion, skill, and user-profile choices. This formulation is restricted to language-expressible preferences that can be instantiated in LIBERO without changing the task goal, evaluated automatically, and reused across tasks. Building on LIBERO, our procedural pipeline generates paired demonstrations with and without preferences. We create five task suites (312 tasks) with high-quality demonstrations, rich metadata, and preference-satisfaction metrics. Experiments show that current VLA policies struggle with zero-shot personalization, while SFT makes preferences learnable. Mixed training achieves better no-preference retention than sequential adaptation and improves performance with contextual prompts compared with preference-only training, but can weaken motion-preference learning; preference generalization, decomposition, and conflict handling remain difficult.</p>
     </div>
 
     <figure class="card fig reveal">
@@ -296,20 +309,20 @@
       </div>
 
       <div class="finding full reveal">
-        <div class="finding-head"><span class="q">Q2</span><h3>Fine-tuning makes preferences learnable, and mixing beats sequencing</h3></div>
-        <p>LoRA fine-tuning on LIBERO-SinglePref lifts all-preference SR/SA to <b>85.0 / 82.3</b>. Fine-tuning on LIBERO first and preferences second costs no-preference success, which falls to <b>52.5%</b>. Mixing both in one run keeps it at <b>90.0%</b> and holds up under rewritten prompts: <b>73.0 / 70.2</b> on LIBERO-ComprePref against <b>44.0 / 42.6</b> for preference-only training.</p>
+        <div class="finding-head"><span class="q">Q2</span><h3>Fine-tuning makes preferences learnable, and mixed training is a trade-off</h3></div>
+        <p>LoRA fine-tuning on LIBERO-SinglePref lifts all-preference SR/SA to <b>85.0 / 82.5</b>. Fine-tuning on LIBERO first and preferences second costs no-preference success, which falls to <b>52.3%</b>. Mixing both in one run keeps it at <b>91.0%</b> and holds up under rewritten prompts: <b>72.8 / 70.1</b> on LIBERO-ComprePref against <b>44.0 / 42.6</b> for preference-only training. The price is paid on motion preferences, where success drops from <b>90.0%</b> to <b>66.9%</b>, so mixing is not uniformly better.</p>
         <div class="table-wrap">
-          <p class="t-cap">Fine-tuned results, all from the π<sub>0.5</sub> base checkpoint. * is the same task and preference under an unseen layout.</p>
+          <p class="t-cap">Fine-tuned results, all from the π<sub>0.5</sub> base checkpoint. Mean ± standard deviation over 10 evaluation runs with fixed checkpoints. * is the same task and preference under an unseen layout.</p>
           <table class="data">
             <thead>
               <tr class="grp"><th></th><th>No-Pref</th><th colspan="2">All-Pref</th><th colspan="2">Motion</th><th colspan="2">Skill</th><th colspan="2">User profile</th><th colspan="2">ComprePref</th></tr>
               <tr><th>Method</th><th>SR</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th><th>SR</th><th>SA</th></tr>
             </thead>
             <tbody>
-              <tr><td>π<sub>0.5</sub>-LoRA</td><td>–</td><td class="best">85.00</td><td>82.25</td><td class="best">90.00</td><td class="best">83.57</td><td>78.85</td><td>76.66</td><td>86.76</td><td>85.31</td><td>44.00</td><td>42.64</td></tr>
-              <tr><td>π<sub>0.5</sub>-Mix-LoRA</td><td class="best">90.00</td><td>84.38</td><td class="best">84.38</td><td>67.50</td><td>67.50</td><td class="best">88.46</td><td class="best">88.46</td><td class="best">91.18</td><td class="best">91.18</td><td class="best">73.00</td><td class="best">70.23</td></tr>
-              <tr><td>π<sub>0.5</sub>-Seq-LoRA</td><td>52.50</td><td>74.38</td><td>74.38</td><td>67.50</td><td>67.50</td><td>73.08</td><td>73.08</td><td>79.41</td><td>79.41</td><td>70.00</td><td>68.25</td></tr>
-              <tr><td>π<sub>0.5</sub>-LoRA*</td><td>–</td><td>41.15</td><td>30.15</td><td>58.00</td><td>46.12</td><td>32.86</td><td>30.98</td><td>37.14</td><td>22.48</td><td>–</td><td>–</td></tr>
+              <tr><td>π<sub>0.5</sub>-LoRA</td><td>–</td><td class="best">84.96<small>±1.06</small></td><td>82.48<small>±1.02</small></td><td class="best">90.00<small>±2.85</small></td><td class="best">85.37<small>±2.66</small></td><td>78.86<small>±1.44</small></td><td>76.67<small>±1.40</small></td><td>86.67<small>±1.49</small></td><td>85.22<small>±1.47</small></td><td>44.00<small>±0.71</small></td><td>42.64<small>±0.69</small></td></tr>
+              <tr><td>π<sub>0.5</sub>-Mix-LoRA</td><td class="best">91.00<small>±0.70</small></td><td>84.55<small>±1.94</small></td><td class="best">84.45<small>±2.04</small></td><td>66.88<small>±3.56</small></td><td>66.06<small>±4.38</small></td><td class="best">89.29<small>±2.82</small></td><td class="best">89.29<small>±2.82</small></td><td class="best">91.33<small>±3.42</small></td><td class="best">91.33<small>±3.42</small></td><td class="best">72.83<small>±0.95</small></td><td class="best">70.07<small>±0.91</small></td></tr>
+              <tr><td>π<sub>0.5</sub>-Seq-LoRA</td><td>52.33<small>±0.37</small></td><td>74.75<small>±1.97</small></td><td>74.73<small>±2.12</small></td><td>67.50<small>±5.68</small></td><td>67.44<small>±6.52</small></td><td>72.14<small>±2.04</small></td><td>72.14<small>±2.04</small></td><td>81.00<small>±2.79</small></td><td>81.00<small>±2.79</small></td><td>70.00<small>±1.32</small></td><td>68.25<small>±1.29</small></td></tr>
+              <tr><td>π<sub>0.5</sub>-LoRA*</td><td>–</td><td>37.49<small>±3.27</small></td><td>28.36<small>±2.55</small></td><td>55.00<small>±7.53</small></td><td>43.43<small>±7.02</small></td><td>28.57<small>±3.79</small></td><td>26.94<small>±3.57</small></td><td>34.00<small>±5.60</small></td><td>20.58<small>±3.39</small></td><td>–</td><td>–</td></tr>
             </tbody>
           </table>
         </div>
