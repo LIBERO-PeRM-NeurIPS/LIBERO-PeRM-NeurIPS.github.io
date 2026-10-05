@@ -146,6 +146,15 @@
       lane.appendChild(track);
       lanes.appendChild(lane);
     });
+    /* After a mouse click on a tile the page jumps to the board. Drop the focus the click left on the tile and
+       keep the lanes running, so they are already moving again when the reader scrolls back up. */
+    lanes.addEventListener("click", function (e) {
+      var tile = e.target.closest(".tile");
+      if (!tile || e.detail === 0) return;          /* detail 0 = activated from the keyboard: leave focus alone */
+      tile.blur();
+      lanes.classList.add("go");
+    });
+    lanes.addEventListener("mouseleave", function () { lanes.classList.remove("go"); });
     if ("IntersectionObserver" in window) {
       var laneVideos = lanes.querySelectorAll("video");
       new IntersectionObserver(function (entries) {

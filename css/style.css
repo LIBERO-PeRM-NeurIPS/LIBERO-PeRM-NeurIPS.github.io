@@ -122,7 +122,11 @@ main { min-width: 0; }
 .lane.down .lane-track { animation-name: lane-down; }
 @keyframes lane-up { to { transform: translateY(-50%); } }
 @keyframes lane-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
-.lanes:hover .lane-track, .lanes:focus-within .lane-track { animation-play-state: paused; }
+/* the lanes hold still under the pointer and for keyboard focus, so a tile can be read and picked.
+   A mouse click must not leave them frozen: .go (set on click, cleared when the pointer leaves) keeps them running. */
+.lanes:hover .lane-track { animation-play-state: paused; }
+.lanes:has(:focus-visible) .lane-track { animation-play-state: paused; }
+.lanes.go .lane-track { animation-play-state: running; }
 .tile { display: block; margin-bottom: 14px; background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; text-decoration: none; color: var(--ink); }
 .tile video { width: 100%; aspect-ratio: 1; object-fit: cover; background: #dfe6f0; }
 .tile span { display: block; border-top: 4px solid var(--c); padding: 7px 10px 10px; font: 500 14px/1.22 var(--cond); min-height: 3.1em; }
