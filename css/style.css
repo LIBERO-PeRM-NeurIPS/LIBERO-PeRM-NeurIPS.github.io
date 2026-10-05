@@ -38,8 +38,8 @@
   --cond: "Barlow Semi Condensed", "Barlow", system-ui, sans-serif;
   --code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --rail: 188px;             /* the navigation card */
-  --gutter: 220px;           /* the column it floats in: 16 + card + 16 */
+  --rail: 150px;             /* the navigation card */
+  --gutter: 174px;           /* the column it floats in: 12 + card + 12 */
   --pad: clamp(20px, 4vw, 56px);
   --r: 6px;
 }
@@ -63,18 +63,18 @@ sub, sup { line-height: 0; }
 .skip:focus { top: 12px; }
 
 /* ---------- rail ---------- */
-.rail { position: fixed; inset: 16px auto auto 16px; width: var(--rail); max-height: calc(100vh - 32px); overflow-y: auto; z-index: 30;
-  background: var(--wash); color: var(--on-wash); display: flex; flex-direction: column; padding: 20px 0 16px;
+.rail { position: fixed; inset: 12px auto auto 12px; width: var(--rail); max-height: calc(100vh - 24px); overflow-y: auto; z-index: 30;
+  background: var(--wash); color: var(--on-wash); display: flex; flex-direction: column; padding: 16px 0 14px;
   border: 1.5px solid var(--accent); border-radius: 10px; }
-.rail-mark { font: 700 21px/1 var(--cond); color: var(--on-wash); text-decoration: none; letter-spacing: -.005em; padding: 0 18px; }
+.rail-mark { font: 700 19px/1 var(--cond); color: var(--on-wash); text-decoration: none; letter-spacing: -.005em; padding: 0 13px; }
 .rail-toggle { display: none; }
 .rail-panel { display: flex; flex-direction: column; flex: 1; min-height: 0; }
-.rail-nav { display: flex; flex-direction: column; margin-top: 18px; }
-.rail-nav a { font: 500 16px/1.2 var(--cond); text-decoration: none; padding: 7px 14px 7px 15px; border-left: 3px solid transparent; }
+.rail-nav { display: flex; flex-direction: column; margin-top: 14px; }
+.rail-nav a { font: 500 15.5px/1.2 var(--cond); text-decoration: none; padding: 6px 10px 6px 10px; border-left: 3px solid transparent; }
 .rail-nav a:hover { background: var(--wash-fill); }
 .rail-nav a.active { font-weight: 700; color: var(--accent); border-left-color: var(--accent); background: var(--accent-bg); }
-.rail-links { margin-top: 14px; padding: 14px 18px 0; border-top: 1px solid var(--wash-line); display: flex; flex-direction: column; gap: 8px; }
-.rail-links a { font: 600 16px/1.2 var(--cond); color: var(--on-wash); text-decoration: none; }
+.rail-links { margin-top: 12px; padding: 12px 13px 0; border-top: 1px solid var(--wash-line); display: flex; flex-direction: column; gap: 8px; }
+.rail-links a { font: 600 15.5px/1.2 var(--cond); color: var(--on-wash); text-decoration: none; }
 .rail-links a:hover { text-decoration: underline; }
 a.soon { cursor: default; opacity: .62; }
 a.soon:hover { text-decoration: none; }
@@ -272,6 +272,8 @@ table.data small { font-size: .8em; font-weight: 400; color: var(--muted); margi
   .rail { position: sticky; inset: auto; top: 0; width: auto; max-height: none; overflow: visible; flex-direction: row; align-items: center; padding: 11px var(--pad);
     border: 0; border-bottom: 1.5px solid var(--accent); border-radius: 0; }
   .rail-mark { padding: 0; font-size: 21px; }
+  .rail-nav a { font-size: 16px; }
+  .rail-links a { font-size: 16px; }
   .rail-toggle { display: inline-flex; margin-left: auto; font: 600 15px/1 var(--cond); padding: 9px 13px 10px; border-radius: var(--r); border: 1px solid var(--wash-edge); background: transparent; color: var(--on-wash); cursor: pointer; }
   .rail-panel { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--wash); padding: 6px 0 18px; border-top: 1px solid var(--wash-line); border-bottom: 1.5px solid var(--accent); max-height: calc(100vh - 54px); overflow-y: auto; }
   .rail.open .rail-panel { display: flex; }
