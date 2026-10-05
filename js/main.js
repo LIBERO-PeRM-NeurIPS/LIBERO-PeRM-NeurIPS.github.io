@@ -77,10 +77,12 @@
     root.innerHTML =
       '<div class="clip"><video muted loop playsinline preload="metadata"></video></div>' +
       '<div class="p-top"><span class="lvl"></span><span class="p-id"></span>' +
-        '<div class="p-ctl"><button type="button" data-act="toggle">Pause</button><button type="button" data-act="enlarge">Enlarge</button></div><div class="p-extra"></div></div>' +
+        '<div class="p-ctl"><button type="button" data-act="toggle">Pause</button><button type="button" data-act="enlarge">Enlarge</button>' +
+          '<a data-act="curves" hidden>Download curves</a></div><div class="p-extra"></div></div>' +
       "<h3></h3><p class=\"p-task\"></p><p class=\"p-how\"></p><div class=\"readout\"></div>";
     var video = root.querySelector("video"), toggle = root.querySelector('[data-act="toggle"]');
     var extra = root.querySelector(".p-extra"), current = null;
+    var curves = root.querySelector('[data-act="curves"]');   /* the per-step values behind the clip's curves */
     extra.className = opts.extraClass || "p-nav";
 
     function setToggle() { toggle.textContent = video.paused ? "Play" : "Pause"; }
@@ -118,6 +120,12 @@
           return '<span class="r-lab">' + esc(label) + '</span><span class="r-bar"><i style="width:' + (f.v == null ? 0 : f.v) + "%" + (fill ? ";background:" + fill : "") + '"></i></span>' +
                  '<span class="r-val">' + (f.v == null ? "n/a" : f.v) + "</span>";
         }).join("");
+        curves.hidden = !t.curves;
+        if (t.curves) {
+          curves.href = t.curves;
+          curves.setAttribute("download", "libero-perm_" + t.suite + "_" + t.id + "_curves.json");
+          curves.title = "Per-step satisfaction and raw values for the rollouts in this clip (JSON)";
+        } else curves.removeAttribute("href");
         video.pause(); video.poster = t.poster; video.src = t.video; video.load();
         if (autoplay && !reduceMotion) video.play().catch(function () {});
         setToggle();

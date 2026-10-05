@@ -167,8 +167,10 @@ h3.sub { margin-top: 44px; }
 .p-id { font: 500 14px/1 var(--cond); color: var(--muted); }
 .p-ctl { margin-left: auto; display: flex; gap: 6px; }
 .p-nav, .switch { display: flex; gap: 6px; padding-left: 10px; border-left: 1px solid var(--rule-strong); }
-.p-ctl button, .p-nav button, .switch button { font: 600 14px/1 var(--cond); padding: 7px 11px 8px; border: 1px solid var(--rule-strong); background: var(--sheet); border-radius: 4px; cursor: pointer; }
-.p-ctl button:hover, .p-nav button:hover, .switch button:hover { border-color: var(--ink); }
+.p-ctl button, .p-ctl a, .p-nav button, .switch button { font: 600 14px/1 var(--cond); padding: 7px 11px 8px; border: 1px solid var(--rule-strong); background: var(--sheet); border-radius: 4px; cursor: pointer; }
+.p-ctl a { color: inherit; text-decoration: none; white-space: nowrap; }
+.p-ctl a[hidden] { display: none; }
+.p-ctl button:hover, .p-ctl a:hover, .p-nav button:hover, .switch button:hover { border-color: var(--ink); }
 .p-nav button:disabled { opacity: .4; cursor: default; border-color: var(--rule); }
 .switch button[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
 .player h3 { margin-top: 12px; font-size: 25px; line-height: 1.15; }
