@@ -76,7 +76,8 @@ button { font-family: inherit; }
 .hero-tag { font-size: clamp(16px, 2.2vw, 21px); font-weight: 400; color: #48484d; max-width: 680px; margin: 0 auto 28px; }
 .hero-tag b { font-weight: 600; color: var(--ink); }
 .authors { margin-bottom: 26px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-.authors .names { font-size: 15.5px; color: var(--ink); }
+.authors .names { font-size: 15.5px; color: var(--ink); max-width: 780px; line-height: 1.75; text-align: center; }
+.authors .names a, .authors .names span { white-space: nowrap; }
 .authors .affil { font-size: 13.5px; color: var(--muted); }
 .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 11px; margin-bottom: 40px; }
 .btn { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink);
