@@ -5,7 +5,7 @@
   "use strict";
 
   /* Fill these in when the links go live; an empty entry is shown as "soon". */
-  var LINKS = { paper: "", code: "https://github.com/LIBERO-PeRM/LIBERO-PeRM", dataset: "" };
+  var LINKS = { paper: "", code: "https://github.com/tasl-lab/LIBERO-PeRM", dataset: "" };
 
   var TASKS = window.PERM_TASKS || [];
   var META = window.PERM_META || {};
